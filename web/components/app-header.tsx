@@ -23,7 +23,7 @@ import { cn } from "@/lib/utils";
 
 export function Wordmark({ className, size = 34 }: { className?: string; size?: number }) {
   return (
-    <Link href="/" className={cn("flex items-center gap-2.5 text-lg font-semibold tracking-tight", className)} aria-label="Cargo Window, home">
+    <Link href="/" className={cn("flex shrink-0 items-center gap-2.5 text-lg font-semibold tracking-tight whitespace-nowrap", className)} aria-label="Cargo Window, home">
       <BrandLogo size={size} priority />
       Cargo Window
     </Link>
@@ -48,7 +48,8 @@ function AiStatus() {
         : ["Offline", "bg-primary", "The Earth server is not reachable. Planning continues in this browser; requests are read by the offline reader."];
   return (
     <Tooltip>
-      <TooltipTrigger render={<span className="hidden items-center gap-2 rounded-full border px-2.5 py-1 text-xs text-muted-foreground md:inline-flex" />}>
+      {/* Hidden between lg and xl, where the main nav needs the room. */}
+      <TooltipTrigger render={<span className="hidden items-center gap-2 rounded-full border px-2.5 py-1 text-xs whitespace-nowrap text-muted-foreground md:inline-flex lg:hidden xl:inline-flex" />}>
         <span className={cn("size-1.5 rounded-full", tone)} />
         {label}
       </TooltipTrigger>
@@ -65,7 +66,7 @@ export function AppHeader() {
 
   return (
     <header className="sticky top-0 z-30 border-b border-border/70 bg-background/75 backdrop-blur-md">
-      <div className="mx-auto flex h-16 w-full max-w-7xl items-center gap-6 px-4 sm:px-6">
+      <div className="mx-auto flex h-16 w-full max-w-7xl items-center gap-3 px-4 sm:gap-6 sm:px-6">
         <Wordmark />
         <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
           {NAV.map((item) => {
@@ -75,24 +76,25 @@ export function AppHeader() {
                 key={item.href}
                 href={item.href}
                 aria-current={active ? "page" : undefined}
-                className={cn("rounded-md px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground", active && "text-foreground")}
+                className={cn("rounded-md px-3 py-1.5 text-sm whitespace-nowrap text-muted-foreground transition-colors hover:bg-muted hover:text-foreground", active && "text-foreground")}
               >
                 {item.label}
               </Link>
             );
           })}
         </nav>
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-1 sm:gap-2">
           <AiStatus />
+          {/* Below sm the guide and the console are in the profile menu instead. */}
           <Tooltip>
-            <TooltipTrigger render={<Button variant="ghost" size="icon" onClick={() => guide.setOpen(true)} aria-label="How it works" />}>
+            <TooltipTrigger render={<Button variant="ghost" size="icon" className="hidden sm:inline-flex" onClick={() => guide.setOpen(true)} aria-label="How it works" />}>
               <CircleHelpIcon />
             </TooltipTrigger>
             <TooltipContent>How it works</TooltipContent>
           </Tooltip>
           <ThemeSwitch />
           {!onConsole && (
-            <Link href="/console/" className={cn(buttonVariants({ size: "sm" }), "h-8 px-3")}>
+            <Link href="/console/" className={cn(buttonVariants({ size: "sm" }), "hidden h-8 px-3 sm:inline-flex")}>
               Open the console <ArrowRightIcon />
             </Link>
           )}
@@ -110,6 +112,16 @@ export function AppHeader() {
                 </DropdownMenuLabel>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
+              {/* The main nav is hidden below lg, so its landing-page sections are reachable from here. */}
+              <DropdownMenuGroup className="lg:hidden">
+                <DropdownMenuLabel>On the home page</DropdownMenuLabel>
+                {NAV.filter((item) => item.href.startsWith("/#")).map((item) => (
+                  <DropdownMenuItem key={item.href} onClick={() => router.push(item.href)}>
+                    <ArrowRightIcon /> {item.label}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator className="lg:hidden" />
               <DropdownMenuGroup>
                 <DropdownMenuItem onClick={() => router.push("/")}>
                   <HomeIcon /> Home

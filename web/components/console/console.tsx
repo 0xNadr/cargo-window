@@ -113,7 +113,7 @@ export function Console() {
   const selectedBase = flightById.get(selected)?.dest ?? "mars";
 
   return (
-    <div className="grid gap-6">
+    <div className="grid grid-cols-1 gap-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="grid gap-1">
           <h1 className="flex items-center gap-3 text-3xl font-semibold tracking-tight sm:text-4xl">
@@ -144,15 +144,22 @@ export function Console() {
 
       <BaseCards bookings={bookings} plan={plan} selectedBase={selectedBase} onSelect={selectBase} />
 
-      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
-        <section className="min-w-0 rounded-xl border bg-card p-5">
+      <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
+        <section className="min-w-0 rounded-xl border bg-card p-4 sm:p-5">
           <Tabs value={tab} onValueChange={(v) => setTab(v as Tab)}>
-            <TabsList className="mb-4">
+            {/* Short labels on phones so the three tabs fit side by side. */}
+            <TabsList className="mb-4 w-full sm:w-fit">
               <TabsTrigger value="inbox">
                 Inbox{unread > 0 && <span className="ml-1.5 rounded-full bg-primary px-1.5 text-[11px] font-semibold text-primary-foreground">{unread}</span>}
               </TabsTrigger>
-              <TabsTrigger value="rocket">What&apos;s on the rocket</TabsTrigger>
-              <TabsTrigger value="calendar">Launch calendar</TabsTrigger>
+              <TabsTrigger value="rocket">
+                <span className="sm:hidden">Rocket</span>
+                <span className="hidden sm:inline">What&apos;s on the rocket</span>
+              </TabsTrigger>
+              <TabsTrigger value="calendar">
+                <span className="sm:hidden">Calendar</span>
+                <span className="hidden sm:inline">Launch calendar</span>
+              </TabsTrigger>
             </TabsList>
             <TabsContent value="inbox">
               <Inbox
@@ -193,7 +200,7 @@ export function Console() {
           </Tabs>
         </section>
 
-        <aside className="grid gap-6">
+        <aside className="grid min-w-0 grid-cols-1 gap-6">
           <WhatChanged activity={activity} />
           <UpdateMessage key={run} manifest={plan.manifests.get(selected)!} bookings={bookings} plan={plan} />
           <WhatIf applied={applied} onApply={applyEvent} />

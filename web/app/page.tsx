@@ -59,7 +59,7 @@ const DIFFERENT = [
 function Screenshot({ src, alt, priority = false }: { src: string; alt: string; priority?: boolean }) {
   return (
     <div className="relative">
-      <div aria-hidden className="glow-center absolute -inset-6 -z-10 rounded-[2rem]" />
+      <div aria-hidden className="glow-center absolute -inset-3 -z-10 rounded-[2rem] sm:-inset-6" />
       <ThemedScreenshot
         name={src}
         alt={alt}

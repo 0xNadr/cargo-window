@@ -30,7 +30,7 @@ function Gauge({ label, used, cap, unit, parts }: { label: string; used: number;
   const show = (n: number) => num(Math.round(n * 10) / 10);
   return (
     <div className="grid gap-1.5">
-      <div className="flex justify-between gap-2 text-sm">
+      <div className="flex flex-wrap justify-between gap-x-2 text-sm">
         <span className="text-muted-foreground">{label}</span>
         <span>
           {show(used)} of {show(cap)} {unit} <span className="text-muted-foreground">· {show(cap - used)} {unit} left</span>
@@ -73,7 +73,7 @@ function LoadRow({ b, plan, fresh, onRemove }: { b: Booking; plan: Plan; fresh: 
   const from = plan.placements.get(b.id)!.bumpedFrom;
   const cons = consequence(b, st);
   return (
-    <li className={cn("group grid grid-cols-[1fr_auto] items-start gap-x-4 gap-y-1 py-3", fresh && "is-new rounded-md")}>
+    <li className={cn("group grid grid-cols-1 items-start gap-x-4 gap-y-1.5 py-3 sm:grid-cols-[1fr_auto]", fresh && "is-new rounded-md")}>
       <div className="min-w-0">
         <p className="font-medium">{b.item}</p>
         <p className="text-sm text-muted-foreground">
@@ -116,7 +116,7 @@ export function ManifestView({
   const choices = f.dest === "mars" ? all : [...all.slice(0, 3), ...(all.indexOf(f) >= 3 ? [f] : [])];
 
   return (
-    <div className="grid gap-6">
+    <div className="grid grid-cols-1 gap-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h2 className="text-2xl font-semibold tracking-tight">
@@ -213,7 +213,7 @@ export function ManifestView({
         <EarthCheckLine manifest={m} earth={earth} serverUp={serverUp} />
         {m.steps.length > 0 && (
           <Collapsible>
-            <CollapsibleTrigger render={<Button variant="ghost" size="sm" className="group/steps -ml-2 text-muted-foreground" />}>
+            <CollapsibleTrigger render={<Button variant="ghost" size="sm" className="group/steps -ml-2 h-auto min-h-7 justify-start py-0.5 text-left whitespace-normal text-muted-foreground" />}>
               <ChevronDownIcon className="transition-transform group-data-[panel-open]/steps:rotate-180" />
               Why this order? See how {f.id} was packed
             </CollapsibleTrigger>
