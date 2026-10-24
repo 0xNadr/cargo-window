@@ -160,3 +160,41 @@
     background-color: var(--glow);
   }
 }
+
+@media (max-width: 767px) {
+  /* iOS zooms into any field under 16px when it gets focus. */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+
+  /* Text tables become one card per row on phones; each cell shows its column name from data-label. */
+  .stack-table thead {
+    display: none;
+  }
+  .stack-table tr {
+    display: grid;
+    gap: 0.375rem;
+    padding: 0.875rem 1rem;
+  }
+  .stack-table td {
+    display: block;
+    max-width: none;
+    padding: 0;
+    text-align: left;
+    white-space: normal;
+  }
+  .stack-table td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 0.125rem;
+    font-family: var(--font-plex-mono);
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+}

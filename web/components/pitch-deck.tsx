@@ -148,6 +148,15 @@ export function PitchDeck() {
     }
   }
 
+  /** Full screen; on a phone also turns to landscape where the browser allows it (Android does, iOS doesn't). */
+  function present() {
+    const orientation = screen.orientation as ScreenOrientation & { lock?: (o: string) => Promise<void> };
+    frame.current
+      ?.requestFullscreen?.()
+      .then(() => orientation.lock?.("landscape"))
+      .catch(() => {});
+  }
+
   const slide = DECK[index];
 
   return (
@@ -161,7 +170,7 @@ export function PitchDeck() {
           <Button variant="outline" size="sm" onClick={exportPowerPoint} disabled={exporting}>
             {exporting ? <Loader2Icon className="animate-spin" /> : <DownloadIcon />} Download PowerPoint
           </Button>
-          <Button variant="outline" size="sm" onClick={() => frame.current?.requestFullscreen?.().catch(() => {})}>
+          <Button variant="outline" size="sm" onClick={present}>
             <MaximizeIcon /> Present full screen
           </Button>
         </div>
@@ -187,6 +196,8 @@ export function PitchDeck() {
         <button type="button" aria-label="Previous slide" onClick={() => go(-1)} className="absolute inset-y-0 left-0 w-[8%] cursor-w-resize outline-none" />
         <button type="button" aria-label="Next slide" onClick={() => go(1)} className="absolute inset-y-0 right-0 w-[8%] cursor-e-resize outline-none" />
       </div>
+
+      <p className="text-xs text-muted-foreground sm:hidden">On a phone, turn it sideways or press Present full screen to read the slides.</p>
 
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex gap-2">

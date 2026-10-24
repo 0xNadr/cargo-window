@@ -63,14 +63,14 @@ for each load:
 function SimpleTable({ head, rows }: { head: string[]; rows: string[][] }) {
   return (
     <Card className="py-0">
-      <Table>
+      <Table className="stack-table">
         <TableHeader>
           <TableRow>{head.map((h) => <TableHead key={h}>{h}</TableHead>)}</TableRow>
         </TableHeader>
         <TableBody>
           {rows.map((r) => (
             <TableRow key={r[0]}>
-              {r.map((c, i) => <TableCell key={i} className={i === 0 ? "font-semibold whitespace-normal" : "whitespace-normal text-muted-foreground"}>{c}</TableCell>)}
+              {r.map((c, i) => <TableCell key={i} data-label={i === 0 ? undefined : head[i]} className={i === 0 ? "font-semibold whitespace-normal" : "whitespace-normal text-muted-foreground"}>{c}</TableCell>)}
             </TableRow>
           ))}
         </TableBody>

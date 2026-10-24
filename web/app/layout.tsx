@@ -21,7 +21,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Starfield />
         <Providers>
           <AppHeader />
-          <main className="relative z-10 mx-auto w-full max-w-7xl flex-1 px-4 pt-8 pb-20 sm:px-6">{children}</main>
+          <main className="relative z-10 mx-auto w-full max-w-7xl flex-1 overflow-x-clip px-4 pt-8 pb-20 sm:px-6">{children}</main>
           <AppFooter />
         </Providers>
       </body>
