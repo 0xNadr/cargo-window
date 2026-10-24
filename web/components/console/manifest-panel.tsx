@@ -128,7 +128,7 @@ export function ManifestPanel({ manifest: m, bookings, plan, fresh, earth, serve
               <Badge variant="outline" className="border-primary/60 text-primary">Step 3</Badge>
               <span className="label-caps text-xs text-muted-foreground">Flight manifest</span>
             </p>
-            <h2 className="mt-1 font-heading text-6xl leading-[0.85] font-extrabold tracking-wide">{f.id}</h2>
+            <h2 className="mt-1 font-heading text-6xl leading-[1.02] font-semibold tracking-tight">{f.id}</h2>
             <p className="mt-1 text-lg">
               Earth → {base.name} <span className="text-muted-foreground">· {base.body}</span>
             </p>

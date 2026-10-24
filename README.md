@@ -118,7 +118,8 @@ Dockerfile, render.yaml
 
 - Server: FastAPI, Pydantic, Uvicorn and the Anthropic Python SDK.
 - Web app: Next.js, React, Tailwind CSS, shadcn/ui with Base UI, Lucide icons and Sonner.
-- Fonts from Google Fonts: Barlow, Barlow Condensed, IBM Plex Mono and Big Shoulders Stencil.
+- Fonts from Google Fonts: Schibsted Grotesk, IBM Plex Mono and Big Shoulders Stencil (wordmark only).
+- PptxGenJS, which builds the PowerPoint download of the pitch deck.
 - The FNV-1a hash, a public algorithm.
 
 ## Limits

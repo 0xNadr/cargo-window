@@ -42,7 +42,7 @@ export function IntroStrip() {
       <ol className="grid gap-3 sm:grid-cols-3">
         {STEPS.map(([title, body], i) => (
           <li key={title} className="grid grid-cols-[2rem_1fr] gap-x-2 rounded-lg border bg-background/40 p-3">
-            <span className="row-span-2 font-heading text-3xl leading-none font-extrabold text-primary">{i + 1}</span>
+            <span className="row-span-2 font-heading text-3xl leading-none font-semibold text-primary tracking-tight">{i + 1}</span>
             <span className="font-semibold">{title}</span>
             <span className="text-sm text-muted-foreground">{body}</span>
           </li>

@@ -7,7 +7,7 @@ export default function AdminHome() {
       <Link href="/admin/deck/">
         <Card className="h-full transition-colors hover:border-primary">
           <CardHeader>
-            <CardTitle className="font-heading text-2xl tracking-wide uppercase">Pitch deck</CardTitle>
+            <CardTitle className="font-heading text-2xl tracking-tight">Pitch deck</CardTitle>
             <CardDescription>The full idea pitch as slides, with speaker notes and full-screen presenting.</CardDescription>
           </CardHeader>
         </Card>
@@ -15,7 +15,7 @@ export default function AdminHome() {
       <Link href="/admin/idea/">
         <Card className="h-full transition-colors hover:border-primary">
           <CardHeader>
-            <CardTitle className="font-heading text-2xl tracking-wide uppercase">The idea</CardTitle>
+            <CardTitle className="font-heading text-2xl tracking-tight">The idea</CardTitle>
             <CardDescription>The challenge&apos;s seven questions answered, what is original, and the technology choices.</CardDescription>
           </CardHeader>
         </Card>
@@ -23,7 +23,7 @@ export default function AdminHome() {
       <Link href="/admin/pitch/">
         <Card className="h-full transition-colors hover:border-primary">
           <CardHeader>
-            <CardTitle className="font-heading text-2xl tracking-wide uppercase">Pitch &amp; demo</CardTitle>
+            <CardTitle className="font-heading text-2xl tracking-tight">Pitch &amp; demo</CardTitle>
             <CardDescription>The five-minute run sheet, the demo click path, scoring, jury questions and the stage checklist.</CardDescription>
           </CardHeader>
         </Card>

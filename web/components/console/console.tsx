@@ -92,7 +92,7 @@ export function Console() {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="label-caps text-xs text-muted-foreground">Earth cargo desk</p>
-          <h1 className="font-heading text-4xl font-extrabold tracking-wide uppercase sm:text-5xl">Flights to the Moon and Mars</h1>
+          <h1 className="font-heading text-4xl font-semibold sm:text-5xl tracking-tight">Flights to the Moon and Mars</h1>
         </div>
         <div className="flex flex-wrap gap-2">
           <ManualBookingDialog onBook={(row) => addLoads([row], "Load booked")} />

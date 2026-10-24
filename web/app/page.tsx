@@ -1,151 +1,209 @@
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowRightIcon, ClockIcon, InboxIcon, RadioTowerIcon, ScaleIcon, ShieldCheckIcon, SparklesIcon, WeightIcon } from "lucide-react";
-import { GuideButton } from "@/components/guide-button";
+import { ArrowRightIcon, ClockIcon, FingerprintIcon, InboxIcon, RadioTowerIcon, ScaleIcon, ShieldCheckIcon, TimerIcon, WeightIcon } from "lucide-react";
 import { HeroTimeline } from "@/components/hero-timeline";
 import { buttonVariants } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-const FACTS = [
-  ["26", "months", "between launch windows to Mars"],
-  ["~7", "months", "for cargo to get there"],
-  ["44", "min", "for a question and its answer"],
-  ["0", "spare rockets", "when a flight is full"],
+const STATS = [
+  ["26 months", "between launch windows to Mars"],
+  ["7 months", "for cargo to get there"],
+  ["44 minutes", "for a question and its answer"],
+  ["0 spare rockets", "when a flight is full"],
 ];
 
 const PROBLEM = [
-  { icon: WeightIcon, title: "Fixed room", text: "Every rocket carries a set mass and volume. In 2035 more cargo is waiting than any flight can take, so someone has to choose." },
-  { icon: ClockIcon, title: "Rare windows", text: "To the Moon there's a flight every few weeks. To Mars the planets only line up every 26 months. A bumped load can mean two years without it." },
-  { icon: RadioTowerIcon, title: "A slow link", text: "Messages to Mars take up to 22 minutes each way. Every back-and-forth about a request costs the crew time they don't have." },
+  { icon: WeightIcon, title: "Fixed room", text: "Every rocket carries a set mass and volume, and more cargo is waiting than any flight can take." },
+  { icon: ClockIcon, title: "Rare windows", text: "The Moon has a flight every few weeks. Mars lines up every 26 months, so a bumped load can mean two years without it." },
+  { icon: RadioTowerIcon, title: "A slow link", text: "Messages to Mars take up to 22 minutes each way. Every back-and-forth costs the crew time." },
 ];
 
 const STEPS = [
-  { icon: InboxIcon, kind: "AI", title: "Read the request", text: "A crew writes what they need in plain words. Claude turns it into a booking draft and asks every missing question in one message." },
-  { icon: ScaleIcon, kind: "RULES", title: "Approve and pack", text: "A cargo officer approves. Fixed, published rules fill every flight: life-critical first, mission-critical next, commercial cargo by bid." },
-  { icon: ShieldCheckIcon, kind: "RULES", title: "See the cost", text: "Every load is checked against the day its base needs it. Late loads turn red, months before launch, with who goes short and for how long." },
+  {
+    icon: InboxIcon,
+    step: "Step 1",
+    title: "Read the request",
+    text: "A crew writes what they need in plain words. Claude turns the message into a booking draft, works out when the base runs out, and lists every missing detail in one reply.",
+    points: ["Nothing is guessed: missing numbers block the booking", "A cargo officer approves every draft"],
+    image: "request-draft.jpg",
+    alt: "A booking draft read from a crew's request for a replacement oxygen reactor",
+  },
+  {
+    icon: ScaleIcon,
+    step: "Step 2",
+    title: "Pack every flight by fixed rules",
+    text: "Life-critical cargo flies first, then what keeps the base running, then commercial cargo by bid. A load that doesn't fit moves to the next flight, with the reason shown.",
+    points: ["Money only orders commercial cargo", "The same bookings always give the same manifest"],
+    image: "bumped.jpg",
+    alt: "The rover fleet bumped to the next Mars window and marked 19 months late",
+  },
+  {
+    icon: ShieldCheckIcon,
+    step: "Step 3",
+    title: "See who goes short, and tell them",
+    text: "Every load is checked against the date its base needs it. Late loads turn red months before launch, and Claude drafts the note to the commander and every shipper affected.",
+    points: ["Measured in days a base goes without", "Briefs use the planner's numbers only"],
+    image: "brief.jpg",
+    alt: "A brief for the base commander and the shippers whose cargo was bumped",
+  },
 ];
 
 const DIFFERENT = [
-  ["Measured in days without", "A manifest is judged by how long a base goes short, not by kilograms carried or money earned."],
-  ["Money can't outrank survival", "Bids only order commercial cargo. Air, water, food and medicine always fly first."],
-  ["Two planets, one plan", "The rules give the same answer every time, so Earth and a base compute the same manifest and confirm it with an 8-character fingerprint."],
-  ["Built for delay", "One message in, one reply out: the request desk gathers everything missing at once and keeps working offline."],
+  { icon: TimerIcon, title: "Measured in days without", text: "A manifest is judged by how long a base goes short, not by kilograms carried or money earned." },
+  { icon: ShieldCheckIcon, title: "Money can't outrank survival", text: "Bids only order commercial cargo. Air, water, food and medicine always fly first." },
+  { icon: FingerprintIcon, title: "Two planets, one plan", text: "Earth and a base compute the same manifest on their own and confirm it with an 8-character fingerprint." },
+  { icon: RadioTowerIcon, title: "Built for delay", text: "One message in, every missing question out at once. The planner keeps working when the link is down." },
 ];
 
-const AUDIENCE = ["Base crews", "Base commanders", "Cargo officers on Earth", "Flight operators", "Companies shipping cargo"];
+function Screenshot({ src, alt, priority = false }: { src: string; alt: string; priority?: boolean }) {
+  return (
+    <div className="relative">
+      <div aria-hidden className="absolute -inset-6 -z-10 rounded-[2rem] bg-[radial-gradient(ellipse_at_center,oklch(0.78_0.13_75/0.14),transparent_70%)]" />
+      <Image
+        src={`/screenshots/${src}`}
+        alt={alt}
+        width={1512}
+        height={798}
+        priority={priority}
+        className="h-auto w-full rounded-xl border border-border/80 shadow-[0_30px_80px_-20px_rgb(0_0_0/0.6)]"
+      />
+    </div>
+  );
+}
+
+function SectionHeading({ id, kicker, title, text }: { id?: string; kicker: string; title: string; text?: string }) {
+  return (
+    <div id={id} className="grid max-w-2xl scroll-mt-24 gap-3">
+      <p className="text-sm font-medium text-primary">{kicker}</p>
+      <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">{title}</h2>
+      {text && <p className="text-lg text-muted-foreground">{text}</p>}
+    </div>
+  );
+}
 
 export default function LandingPage() {
   return (
-    <div className="grid gap-24 pt-6">
-      <section className="grid gap-8">
-        <div className="grid gap-6">
-          <p className="label-caps text-xs text-primary">Cargo planning for the first bases on the Moon and Mars · 2035</p>
-          <h1 className="max-w-[14ch] font-heading text-6xl leading-[0.9] font-extrabold uppercase sm:text-8xl">
-            Miss the ship to Mars and you wait <span className="text-primary">26&nbsp;months</span>.
+    <div className="grid gap-28">
+      <section className="grid items-center gap-12 pt-6 lg:grid-cols-[1fr_1.15fr] lg:pt-12">
+        <div className="grid justify-items-start gap-7">
+          <span className="rounded-full border px-3 py-1 text-xs text-muted-foreground">IEEE Lumen 2.0 · Beyond 2030</span>
+          <h1 className="font-heading text-5xl leading-[1.02] font-semibold tracking-tight text-balance sm:text-6xl">
+            Plan what flies to the <span className="text-primary">Moon and Mars</span>.
           </h1>
-          <p className="max-w-[60ch] text-xl text-muted-foreground">
-            Cargo Window decides what flies to off-world bases. <strong className="font-semibold text-foreground">Survival first, fair rules for the rest,</strong> and every
-            consequence visible before launch, not after the ship lands without it.
+          <p className="max-w-xl text-lg text-muted-foreground">
+            Miss the ship to Mars and the next one leaves in 26 months. Cargo Window decides what goes on every rocket, survival first, and shows who goes
+            short before launch, not after the ship lands without it.
           </p>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <Link href="/console/" className={cn(buttonVariants({ size: "lg" }), "h-11 px-5 text-base")}>
               Open the console <ArrowRightIcon />
             </Link>
-            <GuideButton />
+            <Link href="#how-it-works" className={cn(buttonVariants({ variant: "ghost", size: "lg" }), "h-11 px-4 text-base")}>
+              See how it works
+            </Link>
           </div>
+          <p className="text-sm text-muted-foreground">No sign-up. The console opens on an example day: 2 May 2035.</p>
         </div>
-        <HeroTimeline />
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-          {FACTS.map(([n, unit, text]) => (
-            <div key={text} className="border-l-2 border-primary/60 pl-4">
-              <p className="font-heading text-5xl leading-none font-extrabold tabular-nums">
-                {n}
-                <small className="ml-1.5 text-xl text-muted-foreground">{unit}</small>
+        <Screenshot src="console.jpg" alt="The Cargo Window console: counters, the launch timeline and the request desk" priority />
+      </section>
+
+      <section aria-label="Key numbers" className="grid grid-cols-2 divide-border/70 rounded-xl border border-border/70 bg-card/40 lg:grid-cols-4 lg:divide-x">
+        {STATS.map(([value, label]) => (
+          <div key={label} className="grid gap-1 p-6">
+            <p className="font-heading text-3xl font-semibold tracking-tight tabular-nums">{value}</p>
+            <p className="text-sm text-muted-foreground">{label}</p>
+          </div>
+        ))}
+      </section>
+
+      <section className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+        <SectionHeading
+          kicker="The problem"
+          title="One rocket. More cargo than room."
+          text="On Earth a missed truck costs a day. Off Earth it can leave a crew without a spare part for two years, and today nobody sees it coming."
+        />
+        <ul className="grid gap-0">
+          {PROBLEM.map(({ icon: Icon, title, text }) => (
+            <li key={title} className="grid grid-cols-[2.5rem_1fr] gap-x-4 border-t border-border/70 py-6 first:border-t-0 first:pt-0">
+              <span className="flex size-10 items-center justify-center rounded-lg border bg-card">
+                <Icon className="size-5 text-primary" />
+              </span>
+              <div className="grid gap-1">
+                <h3 className="font-semibold">{title}</h3>
+                <p className="text-muted-foreground">{text}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="grid gap-16">
+        <SectionHeading
+          id="how-it-works"
+          kicker="How it works"
+          title="AI reads and writes. Rules decide. People approve."
+          text="Three steps, the same ones you'll find in the console."
+        />
+        {STEPS.map(({ icon: Icon, step, title, text, points, image, alt }, i) => (
+          <div key={title} className="grid items-center gap-10 lg:grid-cols-2">
+            <div className={cn("grid content-center gap-4", i % 2 === 1 && "lg:order-2")}>
+              <p className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Icon className="size-4 text-primary" /> {step}
               </p>
-              <p className="mt-1 text-sm text-muted-foreground">{text}</p>
+              <h3 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">{title}</h3>
+              <p className="text-lg text-muted-foreground">{text}</p>
+              <ul className="grid gap-2">
+                {points.map((p) => (
+                  <li key={p} className="flex items-start gap-2 text-sm">
+                    <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary" />
+                    {p}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <Screenshot src={image} alt={alt} />
+          </div>
+        ))}
+      </section>
+
+      <section className="grid gap-8">
+        <SectionHeading
+          id="why-mars"
+          kicker="Why Mars changes everything"
+          title="To the Moon a bumped load waits four weeks. To Mars, two years."
+          text="The real launch calendar of the example scenario. Click any launch to open its manifest in the console."
+        />
+        <HeroTimeline />
+      </section>
+
+      <section className="grid gap-10">
+        <SectionHeading id="different" kicker="What's different" title="A cargo plan you can trust from two planets away" />
+        <div className="grid gap-x-10 gap-y-8 sm:grid-cols-2">
+          {DIFFERENT.map(({ icon: Icon, title, text }) => (
+            <div key={title} className="grid grid-cols-[2.5rem_1fr] gap-x-4">
+              <span className="flex size-10 items-center justify-center rounded-lg border bg-card">
+                <Icon className="size-5 text-primary" />
+              </span>
+              <div className="grid gap-1">
+                <h3 className="font-semibold">{title}</h3>
+                <p className="text-muted-foreground">{text}</p>
+              </div>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="grid gap-8">
-        <div className="grid max-w-3xl gap-3">
-          <p className="label-caps text-xs text-muted-foreground">The problem</p>
-          <h2 className="font-heading text-4xl leading-none font-extrabold uppercase sm:text-5xl">On Earth a missed truck costs a day. Off Earth it can cost a crew two years.</h2>
-        </div>
-        <div className="grid gap-4 md:grid-cols-3">
-          {PROBLEM.map(({ icon: Icon, title, text }) => (
-            <Card key={title} className="gap-3 p-5">
-              <Icon className="size-6 text-primary" />
-              <h3 className="text-lg font-semibold">{title}</h3>
-              <p className="text-muted-foreground">{text}</p>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      <section className="grid gap-8">
-        <div className="grid max-w-3xl gap-3">
-          <p className="label-caps text-xs text-muted-foreground">How it works</p>
-          <h2 className="font-heading text-4xl leading-none font-extrabold uppercase sm:text-5xl">AI reads and writes. Rules decide. People approve.</h2>
-        </div>
-        <ol className="grid gap-4 md:grid-cols-3">
-          {STEPS.map(({ icon: Icon, kind, title, text }, i) => (
-            <li key={title}>
-              <Card className="h-full gap-3 p-5">
-                <div className="flex items-center justify-between">
-                  <span className="font-heading text-5xl leading-none font-extrabold text-primary">{i + 1}</span>
-                  <span className={cn("inline-flex items-center gap-1 rounded-sm border px-1.5 font-mono text-[11px] tracking-wider", kind === "AI" ? "text-primary" : "text-life")}>
-                    {kind === "AI" && <SparklesIcon className="size-3" />} {kind}
-                  </span>
-                </div>
-                <h3 className="flex items-center gap-2 text-lg font-semibold">
-                  <Icon className="size-5 text-muted-foreground" /> {title}
-                </h3>
-                <p className="text-muted-foreground">{text}</p>
-              </Card>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <section className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] lg:items-start">
-        <div className="grid gap-3">
-          <p className="label-caps text-xs text-muted-foreground">What makes it different</p>
-          <h2 className="font-heading text-4xl leading-none font-extrabold uppercase sm:text-5xl">A cargo plan you can trust from two planets away</h2>
-          <p className="text-muted-foreground">
-            Freight software ranks cargo by price and assumes a live connection. Neither holds once the people waiting are 225 million kilometres away.
-          </p>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {AUDIENCE.map((a) => (
-              <span key={a} className="rounded-full border px-3 py-1 text-sm text-muted-foreground">{a}</span>
-            ))}
-          </div>
-        </div>
-        <div className="grid gap-3 sm:grid-cols-2">
-          {DIFFERENT.map(([title, text]) => (
-            <Card key={title} className="gap-2 p-5">
-              <h3 className="font-semibold">{title}</h3>
-              <p className="text-sm text-muted-foreground">{text}</p>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      <section>
-        <Card className="items-start gap-4 border-primary/50 bg-primary/10 p-8 sm:p-10">
-          <h2 className="max-w-[22ch] font-heading text-4xl leading-none font-extrabold uppercase sm:text-5xl">Run the cargo desk on 2 May 2035</h2>
-          <p className="max-w-[60ch] text-muted-foreground">
-            The console opens on a real-looking scenario: a Moon base, a Mars outpost and two crowded rockets. Read a crew&apos;s urgent request, approve it, and watch
-            who gets bumped and what it costs them.
+      <section className="relative overflow-hidden rounded-2xl border border-primary/40 bg-card/60 px-6 py-14 text-center sm:px-12">
+        <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,oklch(0.78_0.13_75/0.16),transparent_60%)]" />
+        <div className="mx-auto grid max-w-2xl justify-items-center gap-5">
+          <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">Run the cargo desk on 2 May 2035</h2>
+          <p className="text-lg text-muted-foreground">
+            A Moon base, a Mars outpost and two crowded rockets. Read an urgent request from Mars, approve it, and see who gets bumped and what it costs them.
           </p>
           <Link href="/console/" className={cn(buttonVariants({ size: "lg" }), "h-11 px-5 text-base")}>
             Open the console <ArrowRightIcon />
           </Link>
-        </Card>
-        <p className="mt-6 text-xs text-muted-foreground/80">
-          Example scenario: bases, companies, people, prices and capacities are invented. Mars launch timing, trip length and signal delay follow real orbital mechanics.
-        </p>
+        </div>
       </section>
     </div>
   );

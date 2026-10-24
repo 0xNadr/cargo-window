@@ -55,7 +55,7 @@ export default function PitchPage() {
     <div className="grid gap-14">
       <section className="grid gap-4">
         <p className="label-caps text-xs text-muted-foreground">Pitch session · 25 October, 09:00</p>
-        <p className="max-w-[26ch] font-heading text-4xl leading-none font-extrabold uppercase sm:text-5xl">
+        <p className="max-w-[26ch] font-heading text-4xl leading-none font-semibold sm:text-5xl tracking-tight">
           Cargo Window decides what flies to off-world bases: survival first, fair rules for the rest, every cost visible before launch.
         </p>
         <p className="font-mono text-sm text-muted-foreground">

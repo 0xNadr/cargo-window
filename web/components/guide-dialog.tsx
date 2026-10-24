@@ -39,7 +39,7 @@ export function GuideDialog() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
         <DialogHeader>
-          <DialogTitle className="font-heading text-3xl font-extrabold tracking-wide uppercase">How Cargo Window works</DialogTitle>
+          <DialogTitle className="font-heading text-3xl font-semibold tracking-tight">How Cargo Window works</DialogTitle>
           <DialogDescription>
             Every rocket to the Moon or Mars has fixed room, and more cargo is waiting than fits. Cargo Window decides what flies and shows what each
             decision costs the people waiting for it. A ship to Mars only leaves about every 26 months.
@@ -48,7 +48,7 @@ export function GuideDialog() {
         <ol className="grid gap-3">
           {GUIDE_STEPS.map((s, i) => (
             <li key={s.title} className="grid grid-cols-[2rem_1fr] gap-x-3">
-              <span className="row-span-2 font-heading text-3xl leading-none font-extrabold text-primary">{i + 1}</span>
+              <span className="row-span-2 font-heading text-3xl leading-none font-semibold text-primary tracking-tight">{i + 1}</span>
               <span className="font-semibold">{s.title}</span>
               <span className="text-sm text-muted-foreground">{s.body}</span>
             </li>

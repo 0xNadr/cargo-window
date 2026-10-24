@@ -96,7 +96,7 @@ export default function IdeaPage() {
     <div className="grid gap-14">
       <section className="grid gap-5">
         <p className="label-caps text-xs text-muted-foreground">Beyond 2030 · Our idea</p>
-        <h1 className="max-w-[15ch] font-heading text-5xl leading-[0.93] font-extrabold uppercase sm:text-7xl">
+        <h1 className="max-w-[15ch] font-heading text-5xl leading-[1.02] font-semibold sm:text-7xl tracking-tight">
           Miss the ship to Mars and you wait <span className="text-primary">26&nbsp;months</span>.
         </h1>
         <p className="max-w-[64ch] text-lg text-muted-foreground">
@@ -106,7 +106,7 @@ export default function IdeaPage() {
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {FACTS.map(([n, unit, text]) => (
             <Card key={n} className="gap-2 p-4">
-              <p className="font-heading text-5xl leading-none font-extrabold tabular-nums">
+              <p className="font-heading text-5xl leading-none font-semibold tabular-nums tracking-tight">
                 {n}
                 <small className="ml-1 text-2xl text-muted-foreground">{unit}</small>
               </p>
@@ -263,7 +263,8 @@ export default function IdeaPage() {
             ["Borrowed and credited", <Bullets key="e" items={[
               "Claude, through the Anthropic Python SDK, for reading requests and drafting briefs.",
               "FastAPI, Pydantic, Uvicorn, Next.js, Tailwind CSS and shadcn/ui.",
-              "Google Fonts: Barlow, Barlow Condensed, IBM Plex Mono, Big Shoulders Stencil.",
+              "Google Fonts: Schibsted Grotesk, IBM Plex Mono, Big Shoulders Stencil.",
+              "PptxGenJS, for the PowerPoint download of the pitch deck.",
               "The FNV-1a hash, a public algorithm.",
             ]} />],
           ]}

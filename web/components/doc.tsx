@@ -7,7 +7,7 @@ export function DocSection({ eyebrow, title, children }: { eyebrow: string; titl
     <section className="grid gap-x-10 gap-y-4 lg:grid-cols-[240px_minmax(0,1fr)]">
       <header className="grid content-start gap-1.5">
         <p className="label-caps text-xs text-muted-foreground">{eyebrow}</p>
-        <h2 className="font-heading text-3xl leading-[0.95] font-extrabold tracking-wide uppercase">{title}</h2>
+        <h2 className="font-heading text-3xl leading-[1.02] font-semibold tracking-tight">{title}</h2>
       </header>
       <div className="grid min-w-0 gap-4">{children}</div>
     </section>
