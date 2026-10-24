@@ -165,7 +165,7 @@ export function PitchDeck() {
 
       <div
         ref={frame}
-        className="relative mx-auto aspect-video w-full max-w-[calc((100vh-15rem)*16/9)] overflow-hidden rounded-xl border bg-background [container-type:inline-size] fullscreen:max-w-none fullscreen:rounded-none fullscreen:border-0"
+        className="relative mx-auto aspect-video w-full max-w-[calc((100vh-21rem)*16/9)] overflow-hidden rounded-xl border bg-background [container-type:inline-size] fullscreen:max-w-none fullscreen:rounded-none fullscreen:border-0"
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_85%_15%,oklch(0.78_0.13_75/0.12),transparent_45%)]" />
         <div className="relative h-full px-[6cqw] py-[5cqw]">

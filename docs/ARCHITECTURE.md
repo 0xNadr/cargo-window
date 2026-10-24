@@ -72,6 +72,8 @@ flowchart TD
 | `web/lib/engine.ts` | The packer as the base copy. It has no imports and only uses TypeScript syntax that Node can strip, so the parity test runs it directly. |
 | `web/lib/offline.ts` | The offline request reader, the draft checks and the brief template used when Claude or the server is unavailable. |
 | `web/lib/api.ts` | The client for the server's API. |
+| `web/lib/deck.ts`, `web/lib/deck-pptx.ts` | The pitch deck's slides as data, and the PptxGenJS export that turns them into a `.pptx` in the browser. |
+| `web/components/app-header.tsx`, `app-footer.tsx` | The shared header (navigation, AI status, guide, profile menu) and footer. |
 | `web/components/console/` | The console: request desk, flight board, manifest panel, timeline, scenarios, manual booking. |
 | `web/components/ui/` | shadcn/ui components (Base UI primitives styled with Tailwind). |
 

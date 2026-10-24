@@ -22,10 +22,12 @@ flowchart LR
 
 | | |
 |---|---|
-| ![The console](web/public/screenshots/console.jpg) **The console** opens with a three-step guide, five counters and the launch timeline. | ![A booking draft](web/public/screenshots/request-draft.jpg) **The request desk** turns a crew's message into a booking draft. |
-| ![Missing details](web/public/screenshots/missing-details.jpg) **Nothing is guessed.** Missing numbers block the booking and become questions sent back in one message. | ![A bumped load](web/public/screenshots/bumped.jpg) **Every bump has a reason** and a consequence: the rover fleet waits 19 months. |
-| ![Consequences](web/public/screenshots/consequences.jpg) **Days a base goes short** and late loads drawn on the timeline. | ![The brief](web/public/screenshots/brief.jpg) **The brief** for the commander and every bumped shipper. |
-| ![The profile menu](web/public/screenshots/profile-menu.jpg) **The profile menu** leads to the guide and the admin pages. | ![The pitch deck](web/public/screenshots/deck.jpg) **The pitch deck** with next and previous, speaker notes and full screen. |
+| ![How it works on the landing page](web/public/screenshots/landing-how.jpg) **The landing page** explains the idea in three steps, each with a real screenshot. | ![The console](web/public/screenshots/console.jpg) **The console**: five counters, the launch timeline, the request desk and the manifest. |
+| ![A booking draft](web/public/screenshots/request-draft.jpg) **The request desk** turns a crew's message into a booking draft. | ![Missing details](web/public/screenshots/missing-details.jpg) **Nothing is guessed.** Missing numbers block the booking and become questions sent back in one message. |
+| ![A bumped load](web/public/screenshots/bumped.jpg) **Every bump has a reason** and a consequence: the rover fleet waits 19 months. | ![Consequences](web/public/screenshots/consequences.jpg) **Days a base goes short** and late loads drawn on the timeline. |
+| ![The brief](web/public/screenshots/brief.jpg) **The brief** for the commander and every bumped shipper. | ![The guide](web/public/screenshots/guide.jpg) **"How it works"** opens a step-by-step guide from any page. |
+| ![The profile menu](web/public/screenshots/profile-menu.jpg) **The profile menu** leads to the console, the guide and the admin pages. | ![The pitch deck](web/public/screenshots/deck.jpg) **The pitch deck**: previous and next, speaker notes, full screen, and a PowerPoint download. |
+| ![The idea page](web/public/screenshots/idea.jpg) **The idea** answers the challenge's seven questions. | ![The footer](web/public/screenshots/footer.jpg) **Every page** shares the header and a footer with product, team and project links. |
 
 ## What it does
 
@@ -53,6 +55,17 @@ flowchart LR
 | `/admin/idea/`, `/admin/deck/`, `/admin/pitch/` | The team's pages: the idea in full, the pitch deck, and the pitch and demo plan. Reached through the profile menu. |
 
 "How it works" in the header opens a step-by-step guide on every page.
+
+### The pitch deck and its PowerPoint
+
+`/admin/deck/` presents the five-minute pitch as eight slides: Previous and Next, arrow keys, full screen, and what to say under each slide. **Download PowerPoint** builds `Cargo-Window-pitch.pptx` in the browser from the same slide definitions (`web/lib/deck.ts`), with the screenshots embedded and the speaker notes on every slide, so the on-screen deck and the file never drift apart.
+
+```mermaid
+flowchart LR
+    D["web/lib/deck.ts<br/>slide definitions"] --> W["On-screen deck<br/>components/pitch-deck.tsx"]
+    D --> P["PowerPoint export<br/>lib/deck-pptx.ts"]
+    P --> F["Cargo-Window-pitch.pptx<br/>8 slides, screenshots, speaker notes"]
+```
 
 ## Run it locally
 
@@ -103,9 +116,10 @@ One container serves the API and the web app.
 backend/app/     FastAPI server: models, schedule, packer, request desk, briefs, Claude client
 backend/tests/   scenario, packer, API and parity tests
 web/app/         Next.js routes: landing, console, admin pages
-web/components/  console, header, guide, deck, and shadcn/ui components
-web/lib/         packer (base copy), offline reader, API client, formatting, scenario
-docs/            architecture and AI decisions
+web/components/  console, header, footer, guide, deck, and shadcn/ui components
+web/lib/         packer (base copy), offline reader, API client, scenario, deck slides and PowerPoint export
+web/public/      screenshots used by the landing page, the deck and these docs
+docs/            the idea, architecture and AI decisions
 Dockerfile, render.yaml
 ```
 

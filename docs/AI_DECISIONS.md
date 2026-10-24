@@ -37,6 +37,14 @@ flowchart LR
 | Agreement between Earth and a base | Agreement needs determinism. Two runs of a model can differ, but two runs of the packer can't, which is what makes the fingerprint check possible. |
 | Booking a load or sending a message | A cargo officer approves every booking and sends every brief. Claude only drafts. |
 
+## Considered and left out: a live voice agent
+
+A voice agent (for example ElevenLabs Conversational AI) was considered for the request desk and left out of this version:
+
+- **It contradicts the core constraint.** A live conversation needs answers in under a second. Between Mars and Earth a reply takes 6 to 44 minutes, and nothing is possible for about two weeks at solar conjunction. A cloud voice agent on Earth can't talk to a crew on Mars.
+- **It adds a technology without adding a decision.** The jury's rules say extra technology doesn't earn points by itself, and every extra service is one more thing that can fail on stage.
+- **Where voice does fit:** crews in suits or in the middle of a repair can't type. The right design is store and forward: the crew records a request, it is transcribed at the base, and it travels to Earth as one message into the same request desk. Briefs can travel back the same way as audio. That's on the roadmap, built on transcription that runs at the base rather than a live agent.
+
 ## How the request desk keeps Claude honest
 
 1. **The request is data, not instructions.** The prompt says so, and the request sits inside a delimited block.

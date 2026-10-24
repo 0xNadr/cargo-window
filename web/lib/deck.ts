@@ -43,7 +43,7 @@ export const DECK: DeckSlide[] = [
     points: [
       { title: "Moon base", text: "A flight every four weeks." },
       { title: "Mars outpost", text: "Six people in Jezero crater." },
-      { title: "Already starting", text: "NASA has bought commercial Moon cargo since 2018." },
+      { title: "It happens on Earth", text: "The South Pole station gets no flights for about eight months of winter." },
     ],
   },
   {

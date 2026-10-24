@@ -46,6 +46,8 @@ const QA = [
   ["What if the life-critical loads alone don't fit?", "They move to the next flight like any load and turn red straight away, with how many days the base goes short. Software can't add room to a rocket. It makes sure a person sees the problem months ahead."],
   ["Where do the 26 months come from?", "Earth and Mars line up for a low-energy transfer about every 780 days. Launching outside that window needs far more fuel, so cargo flights cluster in the windows."],
   ["What is the stack?", "A FastAPI server in Python with Pydantic models holds the planner and calls Claude through the Anthropic SDK; the key never leaves the server. The console is Next.js with Tailwind and shadcn/ui, exported as static files the same server hosts. One Docker container deploys both."],
+  ["Why not a voice assistant?", "A live voice agent needs answers in under a second, and Mars is 6 to 44 minutes away for a round trip. Voice fits as recorded messages: a crew in a suit speaks a request, it is transcribed at the base, and it reaches the request desk as one message. That is on our roadmap."],
+  ["Isn't this a made-up problem?", "It already exists on a small scale. The South Pole station gets no flights for about eight months of winter, and space station cargo flights are packed against priority lists. Off-world bases make it bigger and less forgiving."],
   ["Who pays for it?", "Flight operators license it to plan and sell capacity, base agencies use the desk and board, and there is a small fee on each commercial booking."],
   ["What are the limits?", "Mass and volume only: no centre of gravity, hazardous goods, partial loads or return cargo. Prices, companies and capacities are invented. Launch timing follows the real cycle."],
 ];
@@ -159,7 +161,7 @@ export default function PitchPage() {
           items={[
             <><strong>AI in the product:</strong> Claude reads requests and drafts briefs, called from our FastAPI server with the Anthropic Python SDK. It never decides what flies.</>,
             <><strong>AI used to build it:</strong> Claude Code, Anthropic&apos;s coding assistant (model Claude Opus 5.5), wrote most of the code, documentation and screenshots under the team&apos;s direction. Every member should be able to explain the packer, the need-date check, the fingerprint and the limits on the AI.</>,
-            <><strong>External resources:</strong> FastAPI, Pydantic, Uvicorn and the Anthropic Python SDK on the server; Next.js, Tailwind CSS and shadcn/ui in the console; Google Fonts and the public FNV-1a hash algorithm.</>,
+            <><strong>External resources:</strong> FastAPI, Pydantic, Uvicorn and the Anthropic Python SDK on the server; Next.js, Tailwind CSS, shadcn/ui and PptxGenJS in the web app; Google Fonts and the public FNV-1a hash algorithm.</>,
           ]}
         />
       </DocSection>

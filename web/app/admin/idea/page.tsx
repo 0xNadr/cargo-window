@@ -185,6 +185,20 @@ export default function IdeaPage() {
         />
       </DocSection>
 
+      <DocSection eyebrow="Precedent" title="It already happens on Earth, on a small scale">
+        <Prose>
+          <p>The problem isn&apos;t invented. Places that are hard to reach already live by resupply windows, and they plan them by hand.</p>
+        </Prose>
+        <Bullets
+          items={[
+            <><strong>Antarctica:</strong> the South Pole station gets no flights for about eight months of winter. What misses the last summer flight waits until spring.</>,
+            <><strong>The space station:</strong> cargo flights are packed against priority lists, and when a flight is cut back, lower-priority items stay on the ground.</>,
+            <><strong>Remote islands and research ships:</strong> supplies come with scheduled ships, and a missed sailing means weeks or months without.</>,
+          ]}
+        />
+        <Callout>Off-world bases take the same problem and make it bigger, slower to fix and less forgiving. The planning tools haven&apos;t caught up.</Callout>
+      </DocSection>
+
       <DocSection eyebrow="5 · What the solution does" title="Ask, decide, show the cost, agree">
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {SOLUTION.map(([title, kind, text]) => (
@@ -310,6 +324,8 @@ export default function IdeaPage() {
             <><strong>A full copy at each base</strong> that syncs signed bookings when the link is up and compares fingerprints.</>,
             <><strong>Return cargo</strong> (samples back to Earth), hazardous goods rules and centre of gravity.</>,
             <><strong>Signed bookings and an audit log</strong>, so nobody can quietly change a priority.</>,
+            <><strong>A priority policy the bases and operators sign in advance</strong>, so the classes themselves are agreed before any flight is full.</>,
+            <><strong>Voice requests as recorded messages:</strong> crews in suits or mid-repair speak a request, it is transcribed at the base and sent as one message. Live voice agents don&apos;t fit a 44-minute round trip.</>,
           ]}
         />
         <p className="max-w-[90ch] text-xs text-muted-foreground/80">

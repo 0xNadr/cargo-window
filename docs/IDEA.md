@@ -46,6 +46,14 @@ timeline
 
 The 26-month window, the 7-month trip, the 3–22 minute signal delay and the two-week blackout at solar conjunction are orbital mechanics, not guesses.
 
+### It already happens on Earth, on a small scale
+
+- **Antarctica:** the South Pole station gets no flights for about eight months of winter. What misses the last summer flight waits until spring.
+- **The space station:** cargo flights are packed against priority lists, and when a flight is cut back, lower-priority items stay on the ground.
+- **Remote islands and research ships:** supplies come with scheduled ships, and a missed sailing means weeks or months without.
+
+Off-world bases take the same problem and make it bigger, slower to fix and less forgiving. The planning tools haven't caught up.
+
 ## 5. What the solution does
 
 ```mermaid
