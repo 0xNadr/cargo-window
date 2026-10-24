@@ -6,6 +6,8 @@
 
 <p align="center">Cargo planning for the first bases on the Moon and Mars. Built for the IEEE Lumen 2.0 "Beyond 2030" challenge.</p>
 
+<p align="center"><strong><a href="https://cargo-window.nader.info/">Try it live: cargo-window.nader.info</a></strong></p>
+
 A rocket to an off-world base has fixed room, and in 2035 every flight has more cargo waiting than space. On Earth a parcel that misses the truck goes tomorrow. To Mars, the next ship leaves in about 26 months. Cargo Window decides what flies using fixed, published rules, and shows what each decision costs the people waiting for it before launch.
 
 ![The landing page](web/public/screenshots/landing.jpg)
@@ -112,7 +114,7 @@ The backend suite covers:
 
 ## Deploy
 
-One container serves the API and the web app.
+One container serves the API and the web app. The live version runs at https://cargo-window.nader.info/ with Claude connected.
 
 - **Render:** create a Blueprint from this repository (`render.yaml`), then set `ANTHROPIC_API_KEY`.
 - **Any container host:** `docker build -t cargo-window . && docker run -p 8000:8000 -e ANTHROPIC_API_KEY=... cargo-window`
