@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: cargo-window
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: CARGO_WINDOW_MODEL
+        value: claude-opus-5-5
+      - key: CARGO_WINDOW_AI_PER_MINUTE
+        value: "20"
