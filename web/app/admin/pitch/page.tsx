@@ -158,7 +158,7 @@ export default function PitchPage() {
         <Bullets
           items={[
             <><strong>AI in the product:</strong> Claude reads requests and drafts briefs, called from our FastAPI server with the Anthropic Python SDK. It never decides what flies.</>,
-            <><strong>AI used to build it:</strong> say which assistants helped write the code and that the team reviewed it. Every member should be able to explain the packer, the need-date check, the fingerprint and the limits on the AI.</>,
+            <><strong>AI used to build it:</strong> Claude Code, Anthropic&apos;s coding assistant (model Claude Opus 5.5), wrote most of the code, documentation and screenshots under the team&apos;s direction. Every member should be able to explain the packer, the need-date check, the fingerprint and the limits on the AI.</>,
             <><strong>External resources:</strong> FastAPI, Pydantic, Uvicorn and the Anthropic Python SDK on the server; Next.js, Tailwind CSS and shadcn/ui in the console; Google Fonts and the public FNV-1a hash algorithm.</>,
           ]}
         />

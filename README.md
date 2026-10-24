@@ -112,7 +112,7 @@ Dockerfile, render.yaml
 ## AI use (rule 12.5)
 
 - **In the product:** Claude reads requests and drafts briefs, called from the FastAPI server with the Anthropic Python SDK. It never decides what flies. See [docs/AI_DECISIONS.md](docs/AI_DECISIONS.md).
-- **To build it:** _list the AI coding assistants the team used here._ The team reviewed the code and can explain every part of it.
+- **To build it:** Claude Code, Anthropic's coding assistant (model Claude Opus 5.5), wrote most of the code, documentation and screenshots under the team's direction. The team reviewed the code and can explain every part of it.
 
 ## Credits (rule 12.4)
 
