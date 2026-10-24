@@ -50,17 +50,38 @@ export const EVENTS: DemoEvent[] = [
   },
 ];
 
-export const REQUESTS = [
+export interface InboxMessage {
+  id: string;
+  from: string;
+  subject: string;
+  received: string;
+  urgent: boolean;
+  text: string;
+}
+
+export const REQUESTS: InboxMessage[] = [
   {
-    label: "Ares: Sabatier reactor failing",
+    id: "sabatier",
+    from: "Cmdr. Okafor, Ares Outpost",
+    subject: "Sabatier reactor failing, need a replacement",
+    received: "Sol 112 · 07:40",
+    urgent: true,
     text: "ARES OUTPOST TO CARGO DESK, SOL 112.\nSabatier reactor B tripped twice overnight and now runs at 40% output. We need a replacement Sabatier reactor on the next ship. Crated it is about 1.25 tonnes and 6 m³. With reactor A alone our oxygen reserve covers 294 days.\nCmdr. Okafor",
   },
   {
-    label: "Shackleton: medicine",
+    id: "medicine",
+    from: "Medical officer, Shackleton Base",
+    subject: "Antiviral medication running out",
+    received: "02 May · 06:15",
+    urgent: true,
     text: "Shackleton Base medical officer here. One of the crew needs a course of antiviral medication and our stock runs out in 12 days. The package is small, 35 kg and 0.2 cubic metres.",
   },
   {
-    label: "Kepler Mining: drill",
+    id: "kepler",
+    from: "Kepler Mining",
+    subject: "Ice prospecting drill for Ares Outpost",
+    received: "01 May · 16:02",
+    urgent: false,
     text: "Hi, this is Kepler Mining. We'd like to ship an ice prospecting drill to Ares Outpost on the June flight. Our bid is $95,000 per kg. It has to be on site before drilling season starts on 1 June 2036.",
   },
 ];

@@ -1,79 +1,83 @@
 "use client";
 
+import { BrandLogo } from "@/components/brand-logo";
 import { useGuide } from "@/components/providers";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
-export const GUIDE_STEPS = [
+const STEPS = [
   {
-    title: "A request comes in",
-    body: 'Crews write what they need in their own words. Pick a sample in the request desk or paste a message, then click "Read request". Claude turns it into a booking draft and lists anything missing.',
+    title: "Open a request in the inbox",
+    body: "Bases and companies write what they need in their own words, like an email.",
   },
   {
-    title: "You approve it",
-    body: 'Check the draft and click "Approve and book". Nothing is booked without you, and a draft with missing numbers stays blocked.',
+    title: "Turn it into a booking",
+    body: "Click \"Turn into a booking\". Claude fills in what it is, how heavy, and when it's needed. If something is missing, it lists the questions to send back.",
   },
   {
-    title: "The planner packs every flight",
-    body: "Fixed rules decide what flies: life-critical first, then mission-critical, then commercial by bid. A load that doesn't fit moves to the next flight to the same base.",
+    title: "Check it and add it to the plan",
+    body: "Nothing is added without you. Once added, the plan decides which rocket it goes on.",
   },
   {
-    title: "You check the cost",
-    body: 'Pick a flight to see its manifest. Red means a load now arrives after the base needs it. "Days a base goes short" adds that up for everything the crew and base depend on.',
+    title: "See what it changed",
+    body: "\"What changed\" tells you in plain words who had to wait because of it. The message at the top says whether any base will go short.",
   },
   {
-    title: "You tell the people affected",
-    body: '"Write brief" drafts the note to the base commander and a message to each bumped shipper. You check it before sending.',
+    title: "Tell the people affected",
+    body: "\"Write the update\" drafts the note to the base commander and every company whose cargo moved. Read it, then send it.",
   },
 ];
 
-const LEGEND = [
-  ["bg-life", "P1 Life-critical: air, water, food, medicine. Never bumped by anything else."],
-  ["bg-mission", "P2 Mission-critical: keeps the base working, such as power and repairs."],
-  ["bg-commercial", "P3 Commercial: company cargo, ordered by bid per kilogram."],
+const RULES = [
+  ["bg-life", "Keeps the crew alive", "Air, water, food, medicine. Always loaded first."],
+  ["bg-mission", "Keeps the base running", "Power, repairs, greenhouses. Loaded next."],
+  ["bg-commercial", "Paid cargo from companies", "Fills the space that's left, highest offer first."],
 ] as const;
 
 export function GuideDialog() {
   const { open, setOpen } = useGuide();
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
+      <DialogContent className="max-h-[92vh] grid-rows-[auto_minmax(0,1fr)_auto] gap-4 p-5 sm:max-w-[45rem]">
         <DialogHeader>
-          <DialogTitle className="font-heading text-3xl font-semibold tracking-tight">How Cargo Window works</DialogTitle>
+          <DialogTitle className="flex items-center gap-2.5 text-xl font-semibold tracking-tight">
+            <BrandLogo size={30} /> How the cargo desk works
+          </DialogTitle>
           <DialogDescription>
-            Every rocket to the Moon or Mars has fixed room, and more cargo is waiting than fits. Cargo Window decides what flies and shows what each
-            decision costs the people waiting for it. A ship to Mars only leaves about every 26 months.
+            Every rocket to the Moon or Mars has a weight limit, and more cargo is waiting than fits. You decide what goes. A rocket to Mars only leaves about
+            every 26 months, so anything that misses it waits two years.
           </DialogDescription>
         </DialogHeader>
-        <ol className="grid gap-3">
-          {GUIDE_STEPS.map((s, i) => (
-            <li key={s.title} className="grid grid-cols-[2rem_1fr] gap-x-3">
-              <span className="row-span-2 font-heading text-3xl leading-none font-semibold text-primary tracking-tight">{i + 1}</span>
-              <span className="font-semibold">{s.title}</span>
-              <span className="text-sm text-muted-foreground">{s.body}</span>
-            </li>
-          ))}
-        </ol>
-        <div className="grid gap-2 rounded-lg border p-3">
-          <p className="label-caps text-xs text-muted-foreground">Colours on the board</p>
-          {LEGEND.map(([swatch, text]) => (
-            <p key={swatch} className="flex items-start gap-2 text-sm">
-              <span className={`mt-1.5 size-2.5 shrink-0 rounded-sm ${swatch}`} />
-              {text}
-            </p>
-          ))}
-          <p className="flex items-start gap-2 text-sm">
-            <span className="mt-1.5 size-2.5 shrink-0 rounded-full bg-late" />
-            Red: arrives after the base needs it. Blue: moved to a later flight but still on time. Green: on time.
-          </p>
+        {/* On a very short screen only the middle scrolls, so the title and "Got it" stay in view. */}
+        <div className="-mx-5 grid content-start gap-4 overflow-y-auto px-5">
+          <ol className="grid gap-2.5">
+            {STEPS.map((s, i) => (
+              <li key={s.title} className="grid grid-cols-[1.75rem_1fr] gap-x-2 leading-snug">
+                <span className="row-span-2 mt-px flex size-6 items-center justify-center rounded-full bg-primary/15 text-xs font-semibold text-primary">{i + 1}</span>
+                <span className="font-medium">{s.title}</span>
+                <span className="text-sm text-muted-foreground">{s.body}</span>
+              </li>
+            ))}
+          </ol>
+          <div className="grid gap-3 rounded-lg border p-3">
+            <p className="text-sm font-medium">The order things are loaded</p>
+            <div className="grid gap-3 sm:grid-cols-3">
+              {RULES.map(([swatch, name, text]) => (
+                <p key={swatch} className="grid grid-cols-[0.625rem_1fr] gap-x-2 text-sm leading-snug">
+                  <span className={`mt-1 size-2.5 rounded-full ${swatch}`} />
+                  <span className="font-medium">{name}</span>
+                  <span className="col-start-2 text-muted-foreground">{text}</span>
+                </p>
+              ))}
+            </div>
+          </div>
         </div>
-        <p className="text-sm text-muted-foreground">
-          The <span className="font-mono text-primary">fingerprint</span> under each manifest is a short code computed from its loads. The Earth server and
-          this browser each compute it; when they match, both copies of the plan agree, even if the base is 22 light-minutes away.
-        </p>
-        <DialogFooter>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <p className="max-w-md text-sm text-muted-foreground">
+            Anything that doesn&apos;t fit waits for the next rocket to the same base. Paying more never puts cargo ahead of what keeps people alive.
+          </p>
           <Button onClick={() => setOpen(false)}>Got it</Button>
-        </DialogFooter>
+        </div>
       </DialogContent>
     </Dialog>
   );

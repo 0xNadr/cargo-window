@@ -62,13 +62,14 @@ def brief_prompt(facts: str) -> str:
     return f"""You are the cargo desk assistant for Cargo Window, a freight planner for off-world bases in 2035. Write a short brief about one flight's manifest.
 Use only the facts below. Do not invent numbers, dates, loads or people. Plain text only: no Markdown, no bold, no headings other than the three labels.
 
+Write for people who are not planners: plain words, no codes or jargon beyond the rocket names.
 Write three parts, each starting with its label on its own line:
-FOR THE BASE COMMANDER
-Two or three sentences: what flies, what was bumped, and which late loads matter most for the crew.
-FOR AFFECTED SHIPPERS
-One line per bumped load, starting with "- ", naming the shipper, the load, its new flight and arrival date, and how late it is if it is late. If nothing was bumped, say so in one line.
-DECISIONS TO TAKE
-Up to two questions for the commander, each starting with "- ", based only on the free capacity and load sizes given. End with one sentence saying any change must be checked in the planner first.
+To the commander of the base
+Two or three sentences: what flies, what had to wait for a later rocket, and which late loads matter most for the crew.
+To the senders whose cargo moved
+One line per load that didn't fit, starting with "- ", naming the sender, the load, the rocket it now goes on and when it lands, and how late it is if it is late. If nothing had to move, say so in one line.
+Decisions for the commander
+Up to two questions, each starting with "- ", based only on the free capacity and load sizes given. Leave this part out if nothing is late.
 
 Facts:
 {facts}"""

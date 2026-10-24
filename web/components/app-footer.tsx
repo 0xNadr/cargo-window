@@ -35,7 +35,7 @@ export function AppFooter() {
     <footer className="relative z-10 border-t border-border/70 bg-background/80">
       <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-[1.4fr_repeat(3,1fr)]">
         <div className="grid content-start gap-3">
-          <Wordmark />
+          <Wordmark size={40} />
           <p className="max-w-xs text-sm text-muted-foreground">Cargo planning for the first bases on the Moon and Mars. Survival first, fair rules for the rest.</p>
           <p className="text-xs text-muted-foreground">Built for IEEE Lumen 2.0 · Beyond 2030</p>
         </div>

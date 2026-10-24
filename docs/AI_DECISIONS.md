@@ -65,7 +65,7 @@ flowchart TD
     Q --> T{"Need date valid and<br/>after 02 May 2035?"}
     T -- no --> M3["missing: need date"]
     M1 & M2 & M3 --> Ask["One question per missing field,<br/>sent back in one message"]
-    Ask --> Block["Approve and book stays disabled"]
+    Ask --> Block["Add to the plan stays disabled"]
 ```
 
 ![A draft with missing details and the questions to send back](../web/public/screenshots/missing-details.jpg)
@@ -74,7 +74,7 @@ flowchart TD
 
 The server builds the brief's facts from the packer's own output (`brief_facts()`): loads, masses, free capacity, new flights, arrival dates and lateness. The prompt allows only those facts and asks for three fixed parts. Claude writes; it does not compute. The brief is shown as a draft, labelled with its source.
 
-![A brief for the commander and the bumped shippers](../web/public/screenshots/brief.jpg)
+![The update for the commander and the companies whose cargo moved](../web/public/screenshots/brief.jpg)
 
 ## Model and settings
 
@@ -87,11 +87,11 @@ The server builds the brief's facts from the packer's own output (`brief_facts()
 
 | Failure | Server | Browser |
 |---|---|---|
-| No API key configured | `/api/health` reports `ai: false`; AI routes return 503 `no_api_key` | Pill reads "Server, no AI key". The offline reader and brief template are used. |
+| No API key configured | `/api/health` reports `ai: false`; AI routes return 503 `no_api_key` | Pill reads "No AI key". The offline reader and brief template are used. |
 | Rate limit, overload, timeout, network error | 503 with a short reason | Falls back and shows "Claude didn't answer, so the offline reader did it." |
 | Refusal or cut-off answer | 503 `refused` / `truncated` | Same fallback. |
 | Too many AI calls from one client | 429 `rate_limited` | "Claude is busy right now…", then the fallback. |
-| Server unreachable | none | Pill reads "Offline: base copy". Planning continues on the browser's packer. |
+| Server unreachable | none | Pill reads "Offline". Planning continues on the browser's packer. |
 
 ## Privacy and cost
 

@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { ArrowRightIcon, BookOpenIcon, CircleHelpIcon, HomeIcon, LayoutDashboardIcon, LightbulbIcon, ListChecksIcon, PresentationIcon } from "lucide-react";
+import { BrandLogo } from "@/components/brand-logo";
 import { GuideDialog } from "@/components/guide-dialog";
 import { useGuide, useServer } from "@/components/providers";
+import { ThemeSwitch } from "@/components/theme-switch";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -19,14 +21,10 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
-export function Wordmark({ className }: { className?: string }) {
+export function Wordmark({ className, size = 34 }: { className?: string; size?: number }) {
   return (
-    <Link href="/" className={cn("flex items-center gap-2 font-[family-name:var(--font-wordmark)] text-xl font-extrabold tracking-wider uppercase", className)}>
-      <svg viewBox="0 0 30 30" aria-hidden className="size-6 fill-none stroke-primary stroke-2">
-        <rect x="3" y="8" width="24" height="16" rx="1.5" />
-        <path d="M3 13.5h24M10.5 8v16M19.5 8v16" />
-        <circle cx="15" cy="4" r="1.6" className="fill-primary stroke-none" />
-      </svg>
+    <Link href="/" className={cn("flex items-center gap-2.5 text-lg font-semibold tracking-tight", className)} aria-label="Cargo Window, home">
+      <BrandLogo size={size} priority />
       Cargo Window
     </Link>
   );
@@ -92,6 +90,7 @@ export function AppHeader() {
             </TooltipTrigger>
             <TooltipContent>How it works</TooltipContent>
           </Tooltip>
+          <ThemeSwitch />
           {!onConsole && (
             <Link href="/console/" className={cn(buttonVariants({ size: "sm" }), "h-8 px-3")}>
               Open the console <ArrowRightIcon />

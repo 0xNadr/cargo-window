@@ -1,10 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeftIcon, ArrowRightIcon, DownloadIcon, ExternalLinkIcon, Loader2Icon, MaximizeIcon } from "lucide-react";
 import { toast } from "sonner";
+import { BrandLogo } from "@/components/brand-logo";
+import { ThemedScreenshot } from "@/components/themed-screenshot";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { DECK, splitAccent, type DeckPoint, type DeckSlide } from "@/lib/deck";
 import { downloadDeckAsPowerPoint } from "@/lib/deck-pptx";
@@ -19,7 +20,7 @@ function Accented({ text, accent }: { text: string; accent?: string }) {
   return (
     <>
       {before}
-      {hit && <span className="text-primary">{hit}</span>}
+      {hit && <span className="text-mars">{hit}</span>}
       {after}
     </>
   );
@@ -38,17 +39,20 @@ function Point({ point, compact = false }: { point: DeckPoint; compact?: boolean
 }
 
 function Shot({ src, alt }: { src: string; alt: string }) {
-  return <Image src={`/screenshots/${src}`} alt={alt} width={1512} height={798} className="h-auto w-full rounded-[0.8cqw] border shadow-2xl" />;
+  return <ThemedScreenshot name={src} alt={alt} className="rounded-[0.8cqw] border shadow-2xl" />;
 }
 
 function SlideBody({ slide }: { slide: DeckSlide }) {
   switch (slide.kind) {
     case "title":
       return (
-        <div className="grid h-full content-center gap-[2cqw]">
-          <p className={KICKER}>{slide.kicker}</p>
-          <h1 className={cn(TITLE, "text-[8.5cqw]")}>{slide.title}</h1>
-          <p className="max-w-[60%] text-[2.4cqw] leading-snug">{slide.subtitle}</p>
+        <div className="grid h-full grid-cols-[1fr_auto] items-center gap-[4cqw]">
+          <div className="grid gap-[2cqw]">
+            <p className={KICKER}>{slide.kicker}</p>
+            <h1 className={cn(TITLE, "text-[8.5cqw]")}>{slide.title}</h1>
+            <p className="max-w-[90%] text-[2.4cqw] leading-snug">{slide.subtitle}</p>
+          </div>
+          <BrandLogo size={512} className="h-auto w-[24cqw]" priority />
         </div>
       );
     case "points":
@@ -167,12 +171,14 @@ export function PitchDeck() {
         ref={frame}
         className="relative mx-auto aspect-video w-full max-w-[calc((100vh-21rem)*16/9)] overflow-hidden rounded-xl border bg-background [container-type:inline-size] fullscreen:max-w-none fullscreen:rounded-none fullscreen:border-0"
       >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_85%_15%,oklch(0.78_0.13_75/0.12),transparent_45%)]" />
+        <div className="glow-corner absolute inset-0" />
         <div className="relative h-full px-[6cqw] py-[5cqw]">
           <SlideBody slide={slide} />
         </div>
         <div className="absolute right-[2cqw] bottom-[1.5cqw] left-[2cqw] flex items-center justify-between text-[1cqw] text-muted-foreground">
-          <span className="font-[family-name:var(--font-wordmark)] text-[1.4cqw] font-extrabold tracking-widest uppercase">Cargo Window</span>
+          <span className="flex items-center gap-[0.8cqw] text-[1.3cqw] font-semibold">
+            <BrandLogo size={64} className="h-auto w-[2.4cqw]" /> Cargo Window
+          </span>
           <span className="font-mono">
             {index + 1} / {DECK.length}
           </span>

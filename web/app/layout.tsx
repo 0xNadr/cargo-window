@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Big_Shoulders_Stencil, IBM_Plex_Mono, Schibsted_Grotesk } from "next/font/google";
+import { IBM_Plex_Mono, Schibsted_Grotesk } from "next/font/google";
 import { AppFooter } from "@/components/app-footer";
 import { AppHeader } from "@/components/app-header";
 import { Providers } from "@/components/providers";
@@ -8,8 +8,6 @@ import "./globals.css";
 
 const sans = Schibsted_Grotesk({ variable: "--font-schibsted", subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 const mono = IBM_Plex_Mono({ variable: "--font-plex-mono", subsets: ["latin"], weight: ["400", "500"] });
-// Only the wordmark uses the stencil face.
-const stencil = Big_Shoulders_Stencil({ variable: "--font-stencil", subsets: ["latin"], weight: ["800"] });
 
 export const metadata: Metadata = {
   title: "Cargo Window",
@@ -18,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`dark ${sans.variable} ${mono.variable} ${stencil.variable} h-full antialiased`}>
+    <html lang="en" suppressHydrationWarning className={`${sans.variable} ${mono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <Starfield />
         <Providers>

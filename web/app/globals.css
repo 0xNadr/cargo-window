@@ -5,15 +5,15 @@
 @custom-variant dark (&:is(.dark *));
 @custom-variant fullscreen (&:fullscreen);
 
-/* One deliberate look: deep space with Kapton-foil gold as the accent. Priority classes run from
-   white-hot (life-critical) to dim (commercial); status colours are separate from the accent. */
+/* Brand: the Cargo Window mission patch. Navy from its ring, Earth blue as the brand and action colour,
+   Mars orange-red as a sparing second accent. Status colours stay separate: green on time, violet moved,
+   amber warning, crimson late. Cargo classes are a quiet ramp, strongest for what keeps the crew alive. */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-schibsted);
   --font-mono: var(--font-plex-mono);
   --font-heading: var(--font-schibsted);
-  --font-wordmark: var(--font-stencil);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -35,6 +35,8 @@
   --color-commercial: var(--commercial);
   --color-ok: var(--ok);
   --color-moved: var(--moved);
+  --color-mars: var(--mars);
+  --color-warn: var(--warn);
   --color-late: var(--late);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
@@ -43,33 +45,69 @@
   --radius-2xl: calc(var(--radius) * 1.8);
 }
 
-:root,
-.dark {
-  --background: oklch(0.14 0.02 265);
-  --foreground: oklch(0.95 0.01 265);
-  --card: oklch(0.19 0.03 265 / 0.92);
-  --card-foreground: oklch(0.95 0.01 265);
-  --popover: oklch(0.2 0.03 265);
-  --popover-foreground: oklch(0.95 0.01 265);
-  --primary: oklch(0.78 0.13 75);
-  --primary-foreground: oklch(0.2 0.03 70);
-  --secondary: oklch(0.25 0.03 265);
-  --secondary-foreground: oklch(0.95 0.01 265);
-  --muted: oklch(0.24 0.03 265);
-  --muted-foreground: oklch(0.7 0.04 270);
-  --accent: oklch(0.27 0.035 265);
-  --accent-foreground: oklch(0.95 0.01 265);
-  --destructive: oklch(0.69 0.19 18);
-  --border: oklch(0.3 0.04 265);
-  --input: oklch(0.32 0.04 265);
-  --ring: oklch(0.78 0.13 75);
+/* Light: white panels, navy ink, a deeper Earth blue that reads as text and carries white button labels. */
+:root {
+  --background: oklch(0.984 0.004 250);
+  --foreground: oklch(0.2 0.045 262);
+  --card: oklch(1 0 0 / 0.96);
+  --card-foreground: oklch(0.2 0.045 262);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.045 262);
+  --primary: oklch(0.47 0.14 258);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.955 0.01 250);
+  --secondary-foreground: oklch(0.2 0.045 262);
+  --muted: oklch(0.955 0.01 250);
+  --muted-foreground: oklch(0.48 0.03 258);
+  --accent: oklch(0.94 0.018 245);
+  --accent-foreground: oklch(0.2 0.045 262);
+  --destructive: oklch(0.53 0.21 18);
+  --border: oklch(0.9 0.012 255);
+  --input: oklch(0.86 0.015 255);
+  --ring: oklch(0.47 0.14 258);
   --radius: 0.5rem;
-  --life: oklch(0.95 0.015 85);
-  --mission: oklch(0.72 0.02 85);
-  --commercial: oklch(0.5 0.012 80);
-  --ok: oklch(0.78 0.13 160);
-  --moved: oklch(0.75 0.12 260);
-  --late: oklch(0.69 0.19 18);
+  --mars: oklch(0.6 0.19 36);
+  --life: oklch(0.24 0.045 262);
+  --mission: oklch(0.55 0.05 255);
+  --commercial: oklch(0.8 0.02 250);
+  --ok: oklch(0.52 0.14 155);
+  --moved: oklch(0.5 0.15 290);
+  --warn: oklch(0.6 0.14 65);
+  --late: oklch(0.53 0.21 18);
+  --glow: oklch(0.6 0.15 255 / 0.12);
+  color-scheme: light;
+}
+
+/* Dark: the patch's navy sky with the Earth's bright blue. */
+.dark {
+  --background: oklch(0.16 0.04 263);
+  --foreground: oklch(0.96 0.008 250);
+  --card: oklch(0.2 0.042 263 / 0.92);
+  --card-foreground: oklch(0.96 0.008 250);
+  --popover: oklch(0.22 0.044 263);
+  --popover-foreground: oklch(0.96 0.008 250);
+  --primary: oklch(0.67 0.15 255);
+  --primary-foreground: oklch(0.16 0.04 263);
+  --secondary: oklch(0.25 0.042 263);
+  --secondary-foreground: oklch(0.96 0.008 250);
+  --muted: oklch(0.25 0.042 263);
+  --muted-foreground: oklch(0.72 0.03 255);
+  --accent: oklch(0.27 0.045 262);
+  --accent-foreground: oklch(0.96 0.008 250);
+  --destructive: oklch(0.65 0.21 18);
+  --border: oklch(0.3 0.045 262);
+  --input: oklch(0.33 0.048 262);
+  --ring: oklch(0.67 0.15 255);
+  --radius: 0.5rem;
+  --mars: oklch(0.66 0.19 37);
+  --life: oklch(0.95 0.012 245);
+  --mission: oklch(0.68 0.04 250);
+  --commercial: oklch(0.46 0.04 258);
+  --ok: oklch(0.77 0.15 155);
+  --moved: oklch(0.74 0.12 290);
+  --warn: oklch(0.82 0.15 80);
+  --late: oklch(0.66 0.21 18);
+  --glow: oklch(0.67 0.15 255 / 0.14);
   color-scheme: dark;
 }
 
@@ -95,10 +133,20 @@
     font-weight: 500;
     letter-spacing: 0.01em;
   }
+  /* A soft accent light behind screenshots and slides, in either theme. */
+  .glow-center {
+    background: radial-gradient(ellipse at center, var(--glow), transparent 70%);
+  }
+  .glow-top {
+    background: radial-gradient(ellipse at top, var(--glow), transparent 60%);
+  }
+  .glow-corner {
+    background: radial-gradient(circle at 85% 15%, var(--glow), transparent 45%);
+  }
 }
 
 @keyframes flash {
-  from { background-color: oklch(0.78 0.13 75 / 0.18); }
+  from { background-color: var(--glow); }
   to { background-color: transparent; }
 }
 
@@ -109,6 +157,6 @@
 @media (prefers-reduced-motion: reduce) {
   .is-new {
     animation: none;
-    background-color: oklch(0.78 0.13 75 / 0.12);
+    background-color: var(--glow);
   }
 }

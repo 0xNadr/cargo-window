@@ -1,7 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRightIcon, ClockIcon, FingerprintIcon, InboxIcon, RadioTowerIcon, ScaleIcon, ShieldCheckIcon, TimerIcon, WeightIcon } from "lucide-react";
+import { BrandLogo } from "@/components/brand-logo";
 import { HeroTimeline } from "@/components/hero-timeline";
+import { ThemedScreenshot } from "@/components/themed-screenshot";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -22,11 +23,11 @@ const STEPS = [
   {
     icon: InboxIcon,
     step: "Step 1",
-    title: "Read the request",
+    title: "Turn a request into a booking",
     text: "A crew writes what they need in plain words. Claude turns the message into a booking draft, works out when the base runs out, and lists every missing detail in one reply.",
-    points: ["Nothing is guessed: missing numbers block the booking", "A cargo officer approves every draft"],
-    image: "request-draft.jpg",
-    alt: "A booking draft read from a crew's request for a replacement oxygen reactor",
+    points: ["Nothing is guessed: missing numbers block the booking", "A cargo officer checks every booking"],
+    image: "request-draft",
+    alt: "A booking filled in from a crew's request for a replacement oxygen reactor",
   },
   {
     icon: ScaleIcon,
@@ -34,7 +35,7 @@ const STEPS = [
     title: "Pack every flight by fixed rules",
     text: "Life-critical cargo flies first, then what keeps the base running, then commercial cargo by bid. A load that doesn't fit moves to the next flight, with the reason shown.",
     points: ["Money only orders commercial cargo", "The same bookings always give the same manifest"],
-    image: "bumped.jpg",
+    image: "bumped",
     alt: "The rover fleet bumped to the next Mars window and marked 19 months late",
   },
   {
@@ -42,9 +43,9 @@ const STEPS = [
     step: "Step 3",
     title: "See who goes short, and tell them",
     text: "Every load is checked against the date its base needs it. Late loads turn red months before launch, and Claude drafts the note to the commander and every shipper affected.",
-    points: ["Measured in days a base goes without", "Briefs use the planner's numbers only"],
-    image: "brief.jpg",
-    alt: "A brief for the base commander and the shippers whose cargo was bumped",
+    points: ["Measured in days a base goes without", "Updates use the planner's numbers only"],
+    image: "brief",
+    alt: "An update for the base commander and the companies whose cargo moved",
   },
 ];
 
@@ -58,14 +59,12 @@ const DIFFERENT = [
 function Screenshot({ src, alt, priority = false }: { src: string; alt: string; priority?: boolean }) {
   return (
     <div className="relative">
-      <div aria-hidden className="absolute -inset-6 -z-10 rounded-[2rem] bg-[radial-gradient(ellipse_at_center,oklch(0.78_0.13_75/0.14),transparent_70%)]" />
-      <Image
-        src={`/screenshots/${src}`}
+      <div aria-hidden className="glow-center absolute -inset-6 -z-10 rounded-[2rem]" />
+      <ThemedScreenshot
+        name={src}
         alt={alt}
-        width={1512}
-        height={798}
         priority={priority}
-        className="h-auto w-full rounded-xl border border-border/80 shadow-[0_30px_80px_-20px_rgb(0_0_0/0.6)]"
+        className="rounded-xl border border-border/80 shadow-[0_24px_60px_-24px_rgb(15_23_42/0.28)] dark:shadow-[0_30px_80px_-20px_rgb(0_0_0/0.6)]"
       />
     </div>
   );
@@ -86,9 +85,11 @@ export default function LandingPage() {
     <div className="grid gap-28">
       <section className="grid items-center gap-12 pt-6 lg:grid-cols-[1fr_1.15fr] lg:pt-12">
         <div className="grid justify-items-start gap-7">
-          <span className="rounded-full border px-3 py-1 text-xs text-muted-foreground">IEEE Lumen 2.0 · Beyond 2030</span>
+          <span className="flex items-center gap-2 rounded-full border py-1 pr-3 pl-1 text-xs text-muted-foreground">
+            <BrandLogo size={22} /> IEEE Lumen 2.0 · Beyond 2030
+          </span>
           <h1 className="font-heading text-5xl leading-[1.02] font-semibold tracking-tight text-balance sm:text-6xl">
-            Plan what flies to the <span className="text-primary">Moon and Mars</span>.
+            Plan what flies to the <span className="text-primary">Moon</span> and <span className="text-mars">Mars</span>.
           </h1>
           <p className="max-w-xl text-lg text-muted-foreground">
             Miss the ship to Mars and the next one leaves in 26 months. Cargo Window decides what goes on every rocket, survival first, and shows who goes
@@ -104,7 +105,7 @@ export default function LandingPage() {
           </div>
           <p className="text-sm text-muted-foreground">No sign-up. The console opens on an example day: 2 May 2035.</p>
         </div>
-        <Screenshot src="console.jpg" alt="The Cargo Window console: counters, the launch timeline and the request desk" priority />
+        <Screenshot src="console" alt="The Cargo Window console: the status line, one card per base, and the inbox" priority />
       </section>
 
       <section aria-label="Key numbers" className="grid grid-cols-2 divide-border/70 rounded-xl border border-border/70 bg-card/40 lg:grid-cols-4 lg:divide-x">
@@ -194,11 +195,12 @@ export default function LandingPage() {
       </section>
 
       <section className="relative overflow-hidden rounded-2xl border border-primary/40 bg-card/60 px-6 py-14 text-center sm:px-12">
-        <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,oklch(0.78_0.13_75/0.16),transparent_60%)]" />
+        <div aria-hidden className="glow-top absolute inset-0 -z-10" />
         <div className="mx-auto grid max-w-2xl justify-items-center gap-5">
+          <BrandLogo size={88} />
           <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">Run the cargo desk on 2 May 2035</h2>
           <p className="text-lg text-muted-foreground">
-            A Moon base, a Mars outpost and two crowded rockets. Read an urgent request from Mars, approve it, and see who gets bumped and what it costs them.
+            A Moon base, a Mars outpost and two crowded rockets. Turn an urgent request from Mars into a booking, add it to the plan, and see who has to wait and what it costs them.
           </p>
           <Link href="/console/" className={cn(buttonVariants({ size: "lg" }), "h-11 px-5 text-base")}>
             Open the console <ArrowRightIcon />

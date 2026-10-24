@@ -10,7 +10,14 @@ export function fmtDate(t: number): string {
   return `${String(x.getUTCDate()).padStart(2, "0")} ${MONTHS[x.getUTCMonth()]} ${x.getUTCFullYear()}`;
 }
 
-export const dur = (n: number): string => (n < 60 ? `${n} ${n === 1 ? "day" : "days"}` : `${Math.round(n / 30.44)} months`);
+/** A date for running text: "24 Jun 2035". */
+export function fmtDay(t: number): string {
+  const x = new Date(t);
+  const m = MONTHS[x.getUTCMonth()];
+  return `${x.getUTCDate()} ${m[0]}${m.slice(1).toLowerCase()} ${x.getUTCFullYear()}`;
+}
+
+export const dur =(n: number): string => (n < 60 ? `${n} ${n === 1 ? "day" : "days"}` : `${Math.round(n / 30.44)} months`);
 
 export function gapText(ms: number): string {
   const n = Math.round(ms / DAY);

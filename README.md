@@ -1,6 +1,10 @@
-# Cargo Window
+<p align="center">
+  <img src="web/public/brand/logo-512.png" alt="The Cargo Window mission patch: a rocket flying between two worlds" width="128">
+</p>
 
-Cargo planning for the first bases on the Moon and Mars. Built for the IEEE Lumen 2.0 "Beyond 2030" challenge.
+<h1 align="center">Cargo Window</h1>
+
+<p align="center">Cargo planning for the first bases on the Moon and Mars. Built for the IEEE Lumen 2.0 "Beyond 2030" challenge.</p>
 
 A rocket to an off-world base has fixed room, and in 2035 every flight has more cargo waiting than space. On Earth a parcel that misses the truck goes tomorrow. To Mars, the next ship leaves in about 26 months. Cargo Window decides what flies using fixed, published rules, and shows what each decision costs the people waiting for it before launch.
 
@@ -11,33 +15,42 @@ A rocket to an off-world base has fixed room, and in 2035 every flight has more 
 ```mermaid
 flowchart LR
     A["Crew writes a request"] --> B["Claude drafts the booking<br/>and lists what's missing"]
-    B --> C{"Cargo officer<br/>approves?"}
+    B --> C{"Cargo officer<br/>adds it to the plan?"}
     C -- "yes" --> D["Packer fills every flight<br/>by fixed rules"]
     C -- "missing facts" --> A
-    D --> E["Board shows late loads<br/>and days a base goes short"]
-    E --> F["Claude drafts the briefs<br/>for the people affected"]
+    D --> E["Status line shows late loads<br/>and days a base goes short"]
+    E --> F["Claude drafts the update<br/>for the people affected"]
 ```
 
 ## Screenshots
 
 | | |
 |---|---|
-| ![How it works on the landing page](web/public/screenshots/landing-how.jpg) **The landing page** explains the idea in three steps, each with a real screenshot. | ![The console](web/public/screenshots/console.jpg) **The console**: five counters, the launch timeline, the request desk and the manifest. |
-| ![A booking draft](web/public/screenshots/request-draft.jpg) **The request desk** turns a crew's message into a booking draft. | ![Missing details](web/public/screenshots/missing-details.jpg) **Nothing is guessed.** Missing numbers block the booking and become questions sent back in one message. |
-| ![A bumped load](web/public/screenshots/bumped.jpg) **Every bump has a reason** and a consequence: the rover fleet waits 19 months. | ![Consequences](web/public/screenshots/consequences.jpg) **Days a base goes short** and late loads drawn on the timeline. |
-| ![The brief](web/public/screenshots/brief.jpg) **The brief** for the commander and every bumped shipper. | ![The guide](web/public/screenshots/guide.jpg) **"How it works"** opens a step-by-step guide from any page. |
+| ![The console](web/public/screenshots/console.jpg) **The cargo desk** opens with one line that says whether any base will go short, and a card per base with its next rocket. | ![How it works on the landing page](web/public/screenshots/landing-how.jpg) **The landing page** explains the idea in three steps, each with a real screenshot. |
+| ![A booking filled in from a request](web/public/screenshots/request-draft.jpg) **Turn into a booking**: a crew's message from the inbox becomes a booking to check. | ![Missing details](web/public/screenshots/missing-details.jpg) **Nothing is guessed.** Missing numbers keep "Add to the plan" off and become questions sent back in one message. |
+| ![A load that didn't fit](web/public/screenshots/bumped.jpg) **Every move has a reason** and a cost: the rover fleet waits 19 months for the next Mars rocket. | ![A base going short](web/public/screenshots/consequences.jpg) **When a base will go short**, the status line and its card turn red, and "What changed" says why. |
+| ![The update](web/public/screenshots/brief.jpg) **Write the update** drafts the note to the commander and one line for every company whose cargo moved. | ![The guide](web/public/screenshots/guide.jpg) **"How it works"** opens a one-screen guide from any page. |
 | ![The profile menu](web/public/screenshots/profile-menu.jpg) **The profile menu** leads to the console, the guide and the admin pages. | ![The pitch deck](web/public/screenshots/deck.jpg) **The pitch deck**: previous and next, speaker notes, full screen, and a PowerPoint download. |
 | ![The idea page](web/public/screenshots/idea.jpg) **The idea** answers the challenge's seven questions. | ![The footer](web/public/screenshots/footer.jpg) **Every page** shares the header and a footer with product, team and project links. |
+
+### Light and dark
+
+The app follows the system theme, and the sun/moon button in the header switches between light, dark and system. The colours come from the mission patch: deep navy, Earth blue and Mars red.
+
+| Light | Dark |
+|---|---|
+| ![The console in light mode](web/public/screenshots/console-light.jpg) | ![The console in dark mode](web/public/screenshots/console.jpg) |
+| ![A base going short, light mode](web/public/screenshots/consequences-light.jpg) | ![A base going short, dark mode](web/public/screenshots/consequences.jpg) |
 
 ## What it does
 
 | Part | What it does | Decided by |
 |---|---|---|
-| Request desk | Turns a crew's free-text message into a booking draft and puts every missing detail into one reply | Claude, checked by the server, approved by a person |
+| Inbox | Turns a crew's free-text message into a booking to check and puts every missing detail into one reply | Claude, checked by the server, added by a person |
 | Packer | Builds each flight's manifest: life-critical first, then mission-critical, then commercial by bid | Fixed rules |
-| Consequence board | Checks every load against the date its base needs it, and counts the days a base goes short | Fixed rules |
+| Status line and base cards | Check every load against the date its base needs it, count the days a base goes short, and say in plain words who had to wait | Fixed rules |
 | Manifest fingerprint | An 8-character code per manifest. The Earth server and the browser (the base copy) compare codes to confirm they agree. | Fixed rules |
-| Briefs | Drafts the note to the commander and the message to each bumped shipper | Claude, sent by a person |
+| The update | Drafts the note to the commander and one line for each company whose cargo moved | Claude, sent by a person |
 
 ## What we created that wasn't already there
 
@@ -51,10 +64,10 @@ flowchart LR
 | Route | Purpose |
 |---|---|
 | `/` | Landing page that explains the idea, with a button into the console |
-| `/console/` | The cargo desk: request desk, flight board, timeline, manifest, scenarios |
+| `/console/` | The cargo desk: status line, base cards, inbox, what's on each rocket, launch calendar, what changed, the update, what-if events |
 | `/admin/idea/`, `/admin/deck/`, `/admin/pitch/` | The team's pages: the idea in full, the pitch deck, and the pitch and demo plan. Reached through the profile menu. |
 
-"How it works" in the header opens a step-by-step guide on every page.
+"How it works" in the header opens a step-by-step guide on every page. The header also carries the theme switch and the AI status: Claude online, No AI key, or Offline.
 
 ### The pitch deck and its PowerPoint
 
@@ -118,7 +131,7 @@ backend/tests/   scenario, packer, API and parity tests
 web/app/         Next.js routes: landing, console, admin pages
 web/components/  console, header, footer, guide, deck, and shadcn/ui components
 web/lib/         packer (base copy), offline reader, API client, scenario, deck slides and PowerPoint export
-web/public/      screenshots used by the landing page, the deck and these docs
+web/public/      the logo (brand/) and the screenshots used by the landing page, the deck and these docs
 docs/            the idea, architecture and AI decisions
 Dockerfile, render.yaml
 ```
@@ -132,7 +145,8 @@ Dockerfile, render.yaml
 
 - Server: FastAPI, Pydantic, Uvicorn and the Anthropic Python SDK.
 - Web app: Next.js, React, Tailwind CSS, shadcn/ui with Base UI, Lucide icons and Sonner.
-- Fonts from Google Fonts: Schibsted Grotesk, IBM Plex Mono and Big Shoulders Stencil (wordmark only).
+- Fonts from Google Fonts: Schibsted Grotesk and IBM Plex Mono.
+- The Cargo Window mission patch logo, provided by the team.
 - PptxGenJS, which builds the PowerPoint download of the pitch deck.
 - The FNV-1a hash, a public algorithm.
 

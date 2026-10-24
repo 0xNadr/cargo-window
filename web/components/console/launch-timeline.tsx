@@ -14,7 +14,7 @@ const T1 = d("2038-05-01");
 const LANE: Record<BaseId, number> = { moon: 66, mars: 132 };
 const x = (t: number) => +(X0 + ((t - T0) / (T1 - T0)) * (X1 - X0)).toFixed(1);
 
-export function LaunchTimeline({ bookings, plan, selected, onSelect }: { bookings: Booking[]; plan: Plan; selected: string; onSelect: (id: string) => void }) {
+export function LaunchTimeline({ bookings, plan, selected, onSelect, framed = true }: { bookings: Booking[]; plan: Plan; selected: string; onSelect: (id: string) => void; framed?: boolean }) {
   const mars = flightsFor("mars");
   const moonFirst = new Set(flightsFor("moon").slice(0, 3).map((f) => f.id));
   const lateRow: Record<BaseId, number> = { moon: 0, mars: 0 };
@@ -24,15 +24,15 @@ export function LaunchTimeline({ bookings, plan, selected, onSelect }: { booking
     return [{ b, arrive: st.arrive!, y: LANE[b.dest] + 21 + lateRow[b.dest]++ * 7 }];
   });
 
-  return (
-    <Card className="gap-3 pb-4">
-      <CardHeader>
-        <CardTitle className="label-caps text-sm">Launch windows, May 2035 to May 2038</CardTitle>
+  const body = (
+    <>
+      <CardHeader className={cn(!framed && "px-0")}>
+        <CardTitle>Launch calendar, May 2035 to May 2038</CardTitle>
         <CardDescription>
-          Flights to the Moon leave every four weeks. To Mars, the planets only line up about every 26 months. Click a launch to open its manifest.
+          Rockets to the Moon leave every four weeks. To Mars, the planets only line up about every 26 months. Click a launch to see what&apos;s on it.
         </CardDescription>
       </CardHeader>
-      <div className="overflow-x-auto px-4">
+      <div className={cn("overflow-x-auto", framed && "px-4")}>
         <svg viewBox={`0 0 ${W} ${H}`} className="block h-auto w-full min-w-[720px] font-mono" role="img" aria-label="Launch timeline from May 2035 to May 2038. Moon flights every four weeks; Mars flights in June 2035 and August 2037.">
           <defs>
             <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
@@ -111,12 +111,13 @@ export function LaunchTimeline({ bookings, plan, selected, onSelect }: { booking
           ))}
         </svg>
       </div>
-      <ul className="flex flex-wrap gap-x-5 gap-y-1 px-4 font-mono text-xs text-muted-foreground">
-        <li className="flex items-center gap-2"><span className="size-2.5 rounded-full bg-life" /> Launch with cargo</li>
+      <ul className={cn("flex flex-wrap gap-x-5 gap-y-1 text-xs text-muted-foreground", framed && "px-4")}>
+        <li className="flex items-center gap-2"><span className="size-2.5 rounded-full bg-life" /> Rocket with cargo</li>
         <li className="flex items-center gap-2"><span className="h-1.5 w-5 bg-mission/50" /> In transit to Mars</li>
         <li className="flex items-center gap-2"><span className="h-2.5 w-5 bg-[repeating-linear-gradient(45deg,var(--border)_0_2px,transparent_2px_5px)]" /> No launch possible</li>
-        <li className="flex items-center gap-2"><span className="h-0.5 w-5 bg-late" /> Late load: needed, then arrives</li>
+        <li className="flex items-center gap-2"><span className="h-0.5 w-5 bg-late" /> Late cargo: from the day it&apos;s needed to the day it lands</li>
       </ul>
-    </Card>
+    </>
   );
+  return framed ? <Card className="gap-3 pb-4">{body}</Card> : <div className="grid gap-3">{body}</div>;
 }

@@ -5,13 +5,16 @@ const W = 13.33;
 const X = 0.75;
 const CONTENT_W = W - 2 * X;
 const FONT = "Arial";
-const C = { bg: "0B0F1A", card: "151B2B", line: "2A3350", text: "EEF0F6", muted: "9AA1B9", accent: "E6AA4A", rules: "F3EFE4" };
-const SHOT_RATIO = 798 / 1512;
+// Colours from the mission patch: its navy sky, the Earth blue and the Mars orange.
+const C = { bg: "0A1428", card: "13203A", line: "263556", text: "EEF2F8", muted: "9AA8C2", accent: "4890E4", mars: "E45430", rules: "CCE4F0" };
+const SHOT_RATIO = 742 / 1440;
 
 type Pptx = InstanceType<typeof import("pptxgenjs").default>;
 type Slide = ReturnType<Pptx["addSlide"]>;
 
-const shotUrl = (name: string) => `${window.location.origin}/screenshots/${name}`;
+// The PowerPoint has dark slides, so it always embeds the dark-theme screenshots.
+const shotUrl = (name: string) => `${window.location.origin}/screenshots/${name}.jpg`;
+const logoUrl = () => `${window.location.origin}/brand/logo-512.png`;
 
 function kicker(slide: Slide, text: string, y = 0.65) {
   slide.addText(text, { x: X, y, w: CONTENT_W, h: 0.4, fontFace: FONT, fontSize: 14, color: C.accent });
@@ -22,7 +25,7 @@ function title(slide: Slide, text: string, opts: { y: number; h: number; size: n
   slide.addText(
     [
       { text: before, options: { color: C.text } },
-      ...(accent ? [{ text: accent, options: { color: C.accent } }] : []),
+      ...(accent ? [{ text: accent, options: { color: C.mars } }] : []),
       ...(after ? [{ text: after, options: { color: C.text } }] : []),
     ],
     { x: X, y: opts.y, w: opts.w ?? CONTENT_W, h: opts.h, fontFace: FONT, fontSize: opts.size, bold: true, valign: "top" },
@@ -41,7 +44,8 @@ function card(pptx: Pptx, slide: Slide, p: DeckPoint, x: number, y: number, w: n
 }
 
 function footer(slide: Slide, n: number) {
-  slide.addText("Cargo Window", { x: X, y: 6.9, w: 4, h: 0.3, fontFace: FONT, fontSize: 10, bold: true, color: C.muted });
+  slide.addImage({ path: logoUrl(), x: X, y: 6.86, w: 0.34, h: 0.34 });
+  slide.addText("Cargo Window", { x: X + 0.42, y: 6.88, w: 4, h: 0.3, fontFace: FONT, fontSize: 10, bold: true, color: C.muted });
   slide.addText(`${n} / ${DECK.length}`, { x: W - X - 2, y: 6.9, w: 2, h: 0.3, fontFace: FONT, fontSize: 10, color: C.muted, align: "right" });
 }
 
@@ -60,8 +64,9 @@ export async function downloadDeckAsPowerPoint(): Promise<void> {
 
     if (s.kind === "title") {
       kicker(slide, s.kicker, 2.3);
-      title(slide, s.title, { y: 2.75, h: 1.4, size: 66 });
-      slide.addText(s.subtitle, { x: X, y: 4.25, w: 8.5, h: 0.9, fontFace: FONT, fontSize: 24, color: C.text });
+      title(slide, s.title, { y: 2.75, h: 1.4, size: 66, w: 7.8 });
+      slide.addText(s.subtitle, { x: X, y: 4.25, w: 7.8, h: 0.9, fontFace: FONT, fontSize: 24, color: C.text });
+      slide.addImage({ path: logoUrl(), x: W - X - 3.6, y: 1.9, w: 3.6, h: 3.6 });
     } else if (s.kind === "points") {
       kicker(slide, s.kicker);
       title(slide, s.title, { y: 1.1, h: 1.9, size: 38, accent: s.accent, w: 10.5 });

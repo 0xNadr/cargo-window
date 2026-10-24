@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BrandLogo } from "@/components/brand-logo";
 import { Bullets, Callout, DocSection, Kind, Prose } from "@/components/doc";
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -95,9 +96,11 @@ export default function IdeaPage() {
   return (
     <div className="grid gap-14">
       <section className="grid gap-5">
-        <p className="label-caps text-xs text-muted-foreground">Beyond 2030 · Our idea</p>
+        <p className="flex items-center gap-2 text-sm text-muted-foreground">
+          <BrandLogo size={28} /> Beyond 2030 · Our idea
+        </p>
         <h1 className="max-w-[15ch] font-heading text-5xl leading-[1.02] font-semibold sm:text-7xl tracking-tight">
-          Miss the ship to Mars and you wait <span className="text-primary">26&nbsp;months</span>.
+          Miss the ship to Mars and you wait <span className="text-mars">26&nbsp;months</span>.
         </h1>
         <p className="max-w-[64ch] text-lg text-muted-foreground">
           Cargo Window plans what flies to the first bases on the Moon and Mars. It measures every manifest in{" "}
@@ -277,7 +280,7 @@ export default function IdeaPage() {
             ["Borrowed and credited", <Bullets key="e" items={[
               "Claude, through the Anthropic Python SDK, for reading requests and drafting briefs.",
               "FastAPI, Pydantic, Uvicorn, Next.js, Tailwind CSS and shadcn/ui.",
-              "Google Fonts: Schibsted Grotesk, IBM Plex Mono, Big Shoulders Stencil.",
+              "Google Fonts: Schibsted Grotesk and IBM Plex Mono.",
               "PptxGenJS, for the PowerPoint download of the pitch deck.",
               "The FNV-1a hash, a public algorithm.",
             ]} />],

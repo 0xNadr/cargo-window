@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BrandLogo } from "@/components/brand-logo";
 import { Checklist, type CheckItem } from "@/components/checklist";
 import { Bullets, Callout, DocSection } from "@/components/doc";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -17,22 +18,22 @@ const RUN_SHEET = [
 ];
 
 const CLICK_PATH: CheckItem[] = [
-  { id: "d1", time: "20 s", text: "From the landing page, click Open the console.", detail: "Point at the three-step strip, the Mars gap on the timeline, and \"Days a base goes short\" at 0." },
-  { id: "d2", time: "15 s", text: "MS-07 is open on the right.", detail: "Everything fits. The fingerprint line says the Earth server and the browser agree." },
-  { id: "d3", time: "30 s", text: "In the request desk, pick \"Ares: Sabatier reactor failing\" and click Read request.", detail: "Claude drafts it as life-critical, with a need date worked out from the 294 days of oxygen reserve." },
-  { id: "d4", time: "20 s", text: "Click Approve and book.", detail: "The toast says one other load is now late: the rover fleet moves to MS-08, 19 months late." },
-  { id: "d5", time: "20 s", text: "Pick \"Kepler Mining: drill\" and click Read request.", detail: "Mass and volume are missing, so booking stays blocked. Both questions go back in one message." },
-  { id: "d6", time: "10 s", text: "Try a scenario 1: Greenhouse expansion approved.", detail: "Every commercial load is bumped, but days a base goes short stays 0: money gave way, survival didn't." },
-  { id: "d7", time: "10 s", text: "Try a scenario 2: Crew grows from 6 to 8.", detail: "The greenhouse LED panels turn red and days a base goes short jumps to 650." },
-  { id: "d8", time: "20 s", text: "Click Write brief on the MS-07 manifest.", detail: "Claude drafts the note to the commander and a message to each bumped shipper." },
-  { id: "d9", time: "10 s", text: "Flight board › Moon › LN-14.", detail: "On the Moon, bumped loads move four weeks and still arrive on time. That contrast is the point." },
+  { id: "d1", time: "20 s", text: "From the landing page, click Open the console.", detail: "Point at the green line at the top and the Mars card: miss MS-07 and the next rocket leaves 26 months later." },
+  { id: "d2", time: "15 s", text: "Open What's on the rocket.", detail: "MS-07 is nearly full and everything fits. The line at the bottom says Earth and the base hold the same plan." },
+  { id: "d3", time: "30 s", text: "Back in the inbox, open Cmdr. Okafor's message and click Turn into a booking.", detail: "Claude fills it in as life-critical, with a need date worked out from the 294 days of oxygen reserve." },
+  { id: "d4", time: "20 s", text: "Click Add to the plan.", detail: "What changed says one other load now arrives late: the rover fleet moves to MS-08, 19 months late." },
+  { id: "d5", time: "20 s", text: "Open Kepler Mining and click Turn into a booking.", detail: "Weight and space are missing, so Add to the plan stays off. Both questions go back in one message." },
+  { id: "d6", time: "10 s", text: "Under Try what happens if…, apply Greenhouse expansion approved.", detail: "Every paid load moves to a later rocket, but no base goes short: money gave way, survival didn't." },
+  { id: "d7", time: "10 s", text: "Apply Crew grows from 6 to 8.", detail: "The line at the top turns red: the greenhouse LED panels arrive 21 months late and Ares Outpost goes 650 days short." },
+  { id: "d8", time: "20 s", text: "Click Write the update.", detail: "Claude drafts the note to the commander and one line for each company whose cargo moved." },
+  { id: "d9", time: "10 s", text: "Click the Shackleton Base card.", detail: "On the Moon, moved loads wait four weeks for the next rocket and still arrive on time. That contrast is the point." },
 ];
 
 const STAGE: CheckItem[] = [
-  { id: "s1", text: "Open the deployed app on the presenting laptop.", detail: "Zoom until the request desk and the manifest sit side by side." },
-  { id: "s2", text: "Check the status pill at the top says \"Claude online\".", detail: "If it says \"Server, no AI key\", set ANTHROPIC_API_KEY on the server and restart it." },
+  { id: "s1", text: "Open the deployed app on the presenting laptop.", detail: "Zoom until the inbox and the side panels sit side by side." },
+  { id: "s2", text: "Check the status pill at the top says \"Claude online\".", detail: "If it says \"No AI key\", set ANTHROPIC_API_KEY on the server and restart it." },
   { id: "s3", text: "Run the whole click path once shortly before going on.", detail: "It warms the server up and shows Claude's response time on the venue network." },
-  { id: "s4", text: "Press Reset scenario right before you start." },
+  { id: "s4", text: "Press Start over right before you start." },
   { id: "s5", text: "Decide who talks and who clicks." },
 ];
 
@@ -56,7 +57,9 @@ export default function PitchPage() {
   return (
     <div className="grid gap-14">
       <section className="grid gap-4">
-        <p className="label-caps text-xs text-muted-foreground">Pitch session · 25 October, 09:00</p>
+        <p className="flex items-center gap-2 text-sm text-muted-foreground">
+          <BrandLogo size={28} /> Pitch session · 25 October, 09:00
+        </p>
         <p className="max-w-[26ch] font-heading text-4xl leading-none font-semibold sm:text-5xl tracking-tight">
           Cargo Window decides what flies to off-world bases: survival first, fair rules for the rest, every cost visible before launch.
         </p>
@@ -150,8 +153,8 @@ export default function PitchPage() {
         <Bullets
           items={[
             <><strong>Claude is busy or the key is missing:</strong> the offline reader and the brief template take over by themselves. Say it out loud: &ldquo;This is the mode a base uses during a blackout.&rdquo;</>,
-            <><strong>A wrong click:</strong> press Reset scenario and jump back in with the scenarios.</>,
-            <><strong>The server is unreachable:</strong> the browser carries its own copy of the planner, so everything except Claude keeps working. The status pill switches to &ldquo;Offline: base copy&rdquo;.</>,
+            <><strong>A wrong click:</strong> press Start over and jump back in at Try what happens if….</>,
+            <><strong>The server is unreachable:</strong> the browser carries its own copy of the planner, so everything except Claude keeps working. The status pill switches to &ldquo;Offline&rdquo;.</>,
           ]}
         />
       </DocSection>

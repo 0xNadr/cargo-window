@@ -1,7 +1,7 @@
 // What the base copy does without Claude: read requests with simple patterns and write briefs from a template.
 
-import { BASES, DAY, MISSION_DATE, PRIORITY, d, isoDate, round1, statusOf, type BaseId, type Manifest, type Plan, type Priority } from "@/lib/engine";
-import { dur, fmtDate, num } from "@/lib/format";
+import { BASES, DAY, MISSION_DATE, d, isoDate, round1, statusOf, type BaseId, type Manifest, type Plan, type Priority } from "@/lib/engine";
+import { dur, fmtDay, num } from "@/lib/format";
 
 export interface Draft {
   item: string;
@@ -110,26 +110,29 @@ export function readOffline(text: string): Draft {
 
 export function offlineBrief(m: Manifest, plan: Plan): string {
   const f = m.flight;
+  const base = BASES[f.dest].name;
   const late = m.bumped.filter((b) => statusOf(b, plan).kind === "late");
-  const out = ["FOR THE BASE COMMANDER"];
-  let lead = `${m.loaded.length} loads fly on ${f.id}, using ${num(m.mass)} of ${num(f.massCap)} kg.`;
-  if (!m.bumped.length) lead += " Nothing was bumped.";
+  const out = [`To the commander of ${base}`];
+  let lead = `${m.loaded.length} loads are on ${f.id}, which leaves ${fmtDay(f.launch)}.`;
+  if (!m.bumped.length) lead += " Everything that was booked fits.";
   else
     lead +=
-      ` ${m.bumped.length} ${m.bumped.length === 1 ? "load was" : "loads were"} bumped` +
-      (late.length ? `, and ${late.length} now ${late.length === 1 ? "arrives" : "arrive"} late: ${late.map((b) => b.item).join(", ")}.` : ", and all still arrive on time.");
-  out.push(lead, "", "FOR AFFECTED SHIPPERS");
-  if (!m.bumped.length) out.push("- No shipper is affected.");
+      ` ${m.bumped.length} ${m.bumped.length === 1 ? "load didn't" : "loads didn't"} fit and will come on a later rocket` +
+      (late.length ? `. ${late.length === 1 ? "This one arrives" : "These arrive"} after you need ${late.length === 1 ? "it" : "them"}: ${late.map((b) => b.item).join(", ")}.` : ", still in time.");
+  out.push(lead, "", "To the senders whose cargo moved");
+  if (!m.bumped.length) out.push("Nobody's cargo had to move.");
   for (const b of m.bumped) {
     const st = statusOf(b, plan);
-    out.push(`- ${b.shipper}: ${b.item} ${st.flight ? `moves to ${st.flight.id} and arrives ${fmtDate(st.arrive!)}` : "has no flight with room yet"}${st.kind === "late" && st.flight ? `, ${dur(st.gap!)} after you need it` : ""}.`);
+    // Mid-sentence the item is lowercased, but acronyms such as LED keep their capitals.
+    const item = b.item.replace(/\S+/g, (w) => (w.length > 1 && w === w.toUpperCase() ? w : w.toLowerCase()));
+    out.push(`- ${b.shipper}: your ${item} ${st.flight ? `now goes on ${st.flight.id} and lands ${fmtDay(st.arrive!)}` : "has no rocket with room yet"}${st.kind === "late" && st.flight ? `, ${dur(st.gap!)} after the date you asked for` : ""}.`);
   }
-  out.push("", "DECISIONS TO TAKE");
-  if (!late.length) out.push("- None. Every load still arrives on time.");
-  const free = f.massCap - m.mass;
-  for (const b of late.slice(0, 2)) {
-    out.push(`- ${b.item} (${PRIORITY[b.priority].label}) needs ${num(b.mass)} kg and ${num(free)} kg is free on ${f.id}. Should it move up in priority, or can the base manage until ${fmtDate(statusOf(b, plan).arrive!)}?`);
+  if (late.length) {
+    out.push("", "Decisions for the commander");
+    const free = f.massCap - m.mass;
+    for (const b of late.slice(0, 2)) {
+      out.push(`- ${b.item} needs ${num(b.mass)} kg and only ${num(free)} kg is free on ${f.id}. Should something else make room, or can the base manage until ${fmtDay(statusOf(b, plan).arrive!)}?`);
+    }
   }
-  if (late.length) out.push("Check any change in the planner before you send it.");
   return out.join("\n");
 }

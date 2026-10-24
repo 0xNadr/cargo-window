@@ -34,7 +34,7 @@ flowchart LR
 | Route | Who it's for | What it shows |
 |---|---|---|
 | `/` | Anyone | Landing page: the problem, how it works, what's new, and a button into the console. |
-| `/console/` | Cargo officers | The working tool: a three-step introduction, summary counters, the launch timeline, the request desk, the flight board, demo scenarios and the selected flight's manifest. |
+| `/console/` | Cargo officers | The cargo desk: a status line that says whether any base will go short, one card per base, an inbox of requests, what's on each rocket, the launch calendar, what changed, the update to send, and what-if events. |
 | `/admin/idea/` | The team | The challenge's seven questions answered, originality, technology choices. |
 | `/admin/deck/` | The team | The five-minute pitch as slides, with speaker notes and full-screen presenting. |
 | `/admin/pitch/` | The team | Run sheet, demo click path, scoring, jury questions, stage checklist. |
@@ -73,8 +73,10 @@ flowchart TD
 | `web/lib/offline.ts` | The offline request reader, the draft checks and the brief template used when Claude or the server is unavailable. |
 | `web/lib/api.ts` | The client for the server's API. |
 | `web/lib/deck.ts`, `web/lib/deck-pptx.ts` | The pitch deck's slides as data, and the PptxGenJS export that turns them into a `.pptx` in the browser. |
-| `web/components/app-header.tsx`, `app-footer.tsx` | The shared header (navigation, AI status, guide, profile menu) and footer. |
-| `web/components/console/` | The console: request desk, flight board, manifest panel, timeline, scenarios, manual booking. |
+| `web/lib/impact.ts` | Turns a plan into plain sentences: the status line, each base's state, and what a change did to everyone else's cargo. |
+| `web/components/app-header.tsx`, `app-footer.tsx` | The shared header (logo, navigation, AI status, guide, theme switch, profile menu) and footer. |
+| `web/components/brand-logo.tsx`, `theme-switch.tsx`, `themed-screenshot.tsx` | The mission patch logo, the light/dark/system switch, and screenshots that follow the theme (`name-light.jpg` in light mode, `name.jpg` in dark). |
+| `web/components/console/` | The console: `status-banner`, `base-cards`, `inbox` (request to booking), `manifest-view` (what's on the rocket), `launch-timeline`, `side-panels` (what changed, the update, what-if events), and manual booking. |
 | `web/components/ui/` | shadcn/ui components (Base UI primitives styled with Tailwind). |
 
 ## API
@@ -97,19 +99,19 @@ sequenceDiagram
     participant API as FastAPI (Earth copy)
     participant Claude
 
-    Officer->>Web: Paste the crew's message, click Read request
+    Officer->>Web: Open a message in the inbox, click Turn into a booking
     Web->>API: POST /api/intake {text}
     API->>Claude: Prompt + JSON schema
     Claude-->>API: Draft as JSON
     API->>API: normalize(): unknown values become missing
     API-->>Web: Checked draft
     Note over Web: If the call fails, the offline reader drafts it instead
-    Officer->>Web: Approve and book (blocked while anything is missing)
+    Officer->>Web: Add to the plan (blocked while anything is missing)
     Web->>Web: pack() in TypeScript, render the manifest
     Web->>API: POST /api/plan {bookings}
     API->>API: pack() in Python
     API-->>Web: Manifests with fingerprints
-    Web->>Web: Compare fingerprints, show "both copies agree"
+    Web->>Web: Compare fingerprints, show "Earth and the base hold the same plan"
 ```
 
 ## The packing rules
@@ -147,10 +149,10 @@ The console shows, under each manifest, whether the Earth server's fingerprint m
 
 ```mermaid
 flowchart LR
-    R["Read request or Write brief"] --> S{"Server<br/>reachable?"}
-    S -- no --> O["Offline reader / brief template<br/>pill: Offline, base copy"]
+    R["Turn into a booking or Write the update"] --> S{"Server<br/>reachable?"}
+    S -- no --> O["Offline reader / brief template<br/>pill: Offline"]
     S -- yes --> K{"Claude key<br/>configured?"}
-    K -- no --> O2["Offline reader / brief template<br/>pill: Server, no AI key"]
+    K -- no --> O2["Offline reader / brief template<br/>pill: No AI key"]
     K -- yes --> C{"Claude answers<br/>in time, valid JSON?"}
     C -- yes --> D["Claude's draft, checked by the server<br/>pill: Claude online"]
     C -- no --> O3["503 with a reason<br/>offline reader + a note saying so"]

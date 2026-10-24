@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { api } from "@/lib/api";
@@ -30,13 +31,15 @@ export function Providers({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <ServerContext.Provider value={server}>
-      <GuideContext.Provider value={{ open: guideOpen, setOpen: setGuideOpen }}>
-        <TooltipProvider>
-          {children}
-          <Toaster theme="dark" position="bottom-right" />
-        </TooltipProvider>
-      </GuideContext.Provider>
-    </ServerContext.Provider>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+      <ServerContext.Provider value={server}>
+        <GuideContext.Provider value={{ open: guideOpen, setOpen: setGuideOpen }}>
+          <TooltipProvider>
+            {children}
+            <Toaster position="bottom-right" />
+          </TooltipProvider>
+        </GuideContext.Provider>
+      </ServerContext.Provider>
+    </ThemeProvider>
   );
 }

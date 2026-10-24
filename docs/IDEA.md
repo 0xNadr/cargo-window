@@ -74,9 +74,9 @@ flowchart LR
 | Manifest fingerprint | An 8-character code per manifest, so Earth and the base can confirm they hold the same plan. |
 | Briefs | The note to the commander and the message to each bumped shipper, from the planner's numbers only. |
 
-![A booking draft read from a crew's message](../web/public/screenshots/request-draft.jpg)
+![A booking filled in from a crew's message](../web/public/screenshots/request-draft.jpg)
 
-![The rover fleet bumped to the next Mars window](../web/public/screenshots/bumped.jpg)
+![The rover fleet moved to the next Mars rocket, 19 months late](../web/public/screenshots/bumped.jpg)
 
 ## 6. Which technologies, and why
 
@@ -95,7 +95,7 @@ Left out on purpose: blockchain (one operator with signed bookings is enough), a
 
 AI reads and writes. Rules decide. People approve. See [ARCHITECTURE.md](ARCHITECTURE.md) and [AI_DECISIONS.md](AI_DECISIONS.md).
 
-![Late loads drawn on the timeline, with days a base goes short](../web/public/screenshots/consequences.jpg)
+![Ares Outpost will go short: the status line and its base card turn red](../web/public/screenshots/consequences.jpg)
 
 ## What we created that wasn't already there
 
